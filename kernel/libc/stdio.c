@@ -1,7 +1,6 @@
 #include "stdio.h"
 #include "string.h"
-#include "drivers/shell.h"
-
+#include "../drivers/tty.h"
 
 int printf(const char *format, ...) {
     char buf[20],c,*s;
@@ -20,32 +19,36 @@ int printf(const char *format, ...) {
                 case 'i':
                     val = va_arg(ap, int);
                     itoa(val, buf, 10);
-                    printk(buf);
+                    kprint(buf);
                     break;
                 case 'x':
                     uval = va_arg(ap, uint32_t);
                     uitoa(uval, buf, 16);
-                    printk(buf);
+                    kprint(buf);
                     break;
                 case 'd':
                     uval = va_arg(ap, uint32_t);
                     uitoa(uval, buf, 10);
-                    printk(buf);
+                    kprint(buf);
                     break;
                 case 'c':
                     s = va_arg(ap, char*);
-                    printk_c(&c, 1);
+                    kprint_c(&c, 1, WHITE, BLACK);
                     break;
                 case 's':
                     s = va_arg(ap, char*);
-                    printk(s);
+                    kprint(s);
                     break;
                 default:
-                    printk_c((char*)format+1, 1);
+                    kprint_c((char*)format+1, 1, WHITE, BLACK);
             }
         } else
-            printk_c((char*)format+1, 1);
+            kprint_c((char*)format+1, 1, WHITE, BLACK);
     }
     va_end(ap);
     return 0;
+}
+
+void puts(int8_t *buf) {
+    printf("%s\n", buf);
 }

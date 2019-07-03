@@ -6,14 +6,14 @@
 ;   https://github.com/ice-bit/iceOS  ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-global kernel_loader
-extern main
+global kernel_load
+extern kernel_main
 
 section .text
 kernel_loader:
     mov esp, kernel_stack + KERNEL_STACK_SZ ; Stack pointer
     push ebx
-    call main ; jump to kernel's main function
+    call kernel_main ; jump to kernel's main function
 .loop:
     jmp .loop ; endless loop
 

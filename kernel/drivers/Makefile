@@ -1,4 +1,4 @@
-OBJS = kernel_main.o
+OBJS = tty.o 
 
 CC = i686-elf-gcc # cross-compiler
 CFLAGS = -m32 -fno-stack-protector -ffreestanding -Wall -Wextra -Werror -g -c
