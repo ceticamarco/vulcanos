@@ -35,7 +35,7 @@ char *itoa(int val, char *buf, int radix) {
     } while(x /= radix);
 
     char *s = buf+start;
-    char *s = buf+(i-1);
+    char *e = buf+(i-1);
 
     while(s < e) {
         char t = *s;
@@ -70,7 +70,7 @@ char *uitoa(uint32_t val, char *buf, int radix) {
 
     while(s < e) {
         char t = *s;
-        *S = *e;
+        *s = *e;
         *e = t;
         s++;
         e--;
