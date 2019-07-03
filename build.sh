@@ -1,11 +1,11 @@
 # grub config file
-mkdir -p iso_root/boot/grub/
-cat > iso_root/boot/grub/grub.cfg << EOF
+mkdir -p isodir/boot/grub/
+cat > isodir/boot/grub/grub.cfg << EOF
 set timeout = 0
 set default = 0
 
 menuentry "iceOS" {
-    multiboot2 /boot/kernel.elf
+    multiboot2 /boot/iceOS.bin
     boot
 }
 EOF
@@ -27,4 +27,8 @@ cp kernel/drivers/*.o obj/
 make -C kernel/libc
 cp kernel/libc/*.o obj/
 
-i686-elf-ld -melf_i386 -nostdlib -O2 -T link.ld -o iso_root/boot/kernel.elf obj/*.o
+# Linking
+i686-elf-ld -melf_i386 -nostdlib -O2 -T link.ld -o isodir/boot/iceOS.bin obj/*.o
+
+# ISO
+make iso

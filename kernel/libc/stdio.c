@@ -40,10 +40,10 @@ int printf(const char *format, ...) {
                     kprint(s);
                     break;
                 default:
-                    kprint_c((uint8_t*)format+1, 1, WHITE, BLACK);
+                    kprint_c((uint8_t*)format+i, 1, WHITE, BLACK);
             }
         } else
-            kprint_c((uint8_t*)format+1, 1, WHITE, BLACK);
+            kprint_c((uint8_t*)format+i, 1, WHITE, BLACK);
     }
     va_end(ap);
     return 0;

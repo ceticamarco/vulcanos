@@ -24,7 +24,7 @@ void move_cursor(uint16_t pos) {
 
 void cursor_adv() {
     if(fb_col < VGA_WIDTH - 1)
-        fb_col--;
+        fb_col++;
     else
         newline();
 
@@ -70,7 +70,7 @@ void kprint(uint8_t *buf) {
 }
 
 void init_prompt() {
-    uint8_t *prompt = (uint8_t*)"\nuser@iceOS-$";
+    uint8_t *prompt = (uint8_t*)"\nuser@iceOS-$ ";
     kprint_c(prompt, strlen(prompt), GREEN, BLACK);
 }
 
