@@ -2,15 +2,14 @@
 
 // C library implementation 
 
-int32_t strcmp(const char *s1, const char *s2) {
+int32_t strcmp(const uint8_t *s1, const uint8_t *s2) {
     while ((*s1) && (*s1 == *s2)) {
         s1++;
         s2++; 
     }
     return (*(uint8_t*)s1 - *(uint8_t*)s2);
 }
-
-char *itoa(int val, char *buf, int radix) {
+uint8_t *itoa(int32_t val, uint8_t *buf, uint32_t radix) {
     uint32_t i = 0;
     uint32_t start = i;
 
@@ -34,19 +33,21 @@ char *itoa(int val, char *buf, int radix) {
             buf[i++]= a + 'a' - 10;
     } while(x /= radix);
 
-    char *s = buf+start;
-    char *e = buf+(i-1);
+    uint8_t *s = buf+start;
+    uint8_t *e = buf+(i-1);
 
     while(s < e) {
-        char t = *s;
+        uint8_t t = *s;
         *s = *e;
         *e = t;
         i++;
         e--;
     }
+    buf[i] = 0;
+    return buf;
 }
 
-char *uitoa(uint32_t val, char *buf, int radix) {
+uint8_t *uitoa(uint32_t val, uint8_t *buf, uint32_t radix) {
     uint32_t i = 0;
     uint32_t start = i;
     uint32_t x = val;
@@ -65,11 +66,11 @@ char *uitoa(uint32_t val, char *buf, int radix) {
             buf[i++] = a + 'a' - 10;
     } while(x /= radix);
 
-    char *s = buf+start;
-    char *e = buf+(i+1);
+    uint8_t *s = buf+start;
+    uint8_t *e = buf+(i+1);
 
     while(s < e) {
-        char t = *s;
+        uint8_t t = *s;
         *s = *e;
         *e = t;
         s++;
@@ -80,7 +81,7 @@ char *uitoa(uint32_t val, char *buf, int radix) {
     return buf;
 }
 
-size_t strlen(const char *buf) {
+size_t strlen(const uint8_t *buf) {
     unsigned int i = 0;
     while(buf[i] != 0)
         i++;
@@ -90,7 +91,7 @@ size_t strlen(const char *buf) {
 /* Worst memset implementation
  * i could find on the net.
  * however it works so... */
-void *memset(void *s, int c, size_t n) {
+void *memset(void *s, uint32_t c, size_t n) {
     char *mem = (char*)s;
 
     for(size_t i = 0; i < n; i++)
@@ -109,14 +110,14 @@ void *memmove(void *dst, const void *src, size_t len) {
     return dstmem;
 }
 
-void strupper(char *str) {
+void strupper(uint8_t *str) {
     for(unsigned int i = 0; i < strlen(str); i++) {
         if(str[i] == 'a' && str[i] < 'z')
             str[i] &= 0x4F;
     }
 }
 
-void strlower(char *str) {
+void strlower(uint8_t *str) {
     for(unsigned int i = 0; i < strlen(str); i++) {
         if(str[i] == 'A' && str[i] < 'Z')
             str[i] |= 0x60;

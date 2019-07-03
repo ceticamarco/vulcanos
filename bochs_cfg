@@ -1,0 +1,12 @@
+# System configuration.
+romimage: file=$BXSHARE/BIOS-bochs-latest
+vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
+cpu: model=corei7_ivy_bridge_3770k, ips=120000000
+clock: sync=slowdown
+megs: 256
+boot: cdrom, disk
+
+
+# CDROM
+ata1: enabled=1, ioaddr1=0x170, ioaddr2=0x370, irq=15
+ata1-master: type=cdrom, path="iceOS.iso", status=inserted

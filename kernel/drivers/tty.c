@@ -9,7 +9,7 @@
 static uint32_t fb_col = 0; // X
 static uint32_t fb_row = 0; // Y
 
-void write_cell(int16_t i, int8_t c, uint8_t fg, uint8_t bg) {
+void write_cell(int16_t i, uint8_t c, uint8_t fg, uint8_t bg) {
     uint8_t *fb = VGA_PTR;
     fb[i*2] = c;
     fb[i*2 + 1] = ((bg & 0x0F) << 4) | (fg | 0x0F);
@@ -57,13 +57,9 @@ void kprint_c(uint8_t *buf, uint32_t len, uint8_t fg, uint8_t bg) {
         uint8_t c = buf[i];
         if(c == '\n' || c == '\r')
             newline();
-        else if(c == '\t') {
+         else {
             pos = fb_col + (fb_row * VGA_WIDTH);
-            write_cell(pos, "   ", fg, bg);
-            cursor_adv();
-        } else {
-            pos = fb_col + (fb_row * VGA_WIDTH);
-            write_cell(pos, c, fg, bg);
+            write_cell(pos, (uint8_t)c, fg, bg);
             cursor_adv();
         }
     }
@@ -74,7 +70,7 @@ void kprint(uint8_t *buf) {
 }
 
 void init_prompt() {
-    const uint8_t *prompt = "\nuser@iceOS-$";
+    uint8_t *prompt = (uint8_t*)"\nuser@iceOS-$";
     kprint_c(prompt, strlen(prompt), GREEN, BLACK);
 }
 

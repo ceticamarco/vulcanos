@@ -1,4 +1,4 @@
-ENTRY(kernel_load)
+ENTRY(kernel_loader)
 
 . = 0x00100000;
 

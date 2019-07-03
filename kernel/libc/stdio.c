@@ -3,13 +3,13 @@
 #include "../drivers/tty.h"
 
 int printf(const char *format, ...) {
-    char buf[20],c,*s;
+    uint8_t buf[20],c,*s;
     int val;
     int32_t uval;
     va_list ap;
     va_start(ap, format);
 
-    for(size_t i = 0; i < strlen(format); i++) {
+    for(size_t i = 0; i < strlen((uint8_t*)format); i++) {
         if(format[i] == '%') {
             i++;
             while(format[i] == ' ')
@@ -32,23 +32,23 @@ int printf(const char *format, ...) {
                     kprint(buf);
                     break;
                 case 'c':
-                    s = va_arg(ap, char*);
+                    s = va_arg(ap, uint8_t*);
                     kprint_c(&c, 1, WHITE, BLACK);
                     break;
                 case 's':
-                    s = va_arg(ap, char*);
+                    s = va_arg(ap, uint8_t*);
                     kprint(s);
                     break;
                 default:
-                    kprint_c((char*)format+1, 1, WHITE, BLACK);
+                    kprint_c((uint8_t*)format+1, 1, WHITE, BLACK);
             }
         } else
-            kprint_c((char*)format+1, 1, WHITE, BLACK);
+            kprint_c((uint8_t*)format+1, 1, WHITE, BLACK);
     }
     va_end(ap);
     return 0;
 }
 
-void puts(int8_t *buf) {
+void puts(const char *buf) {
     printf("%s\n", buf);
 }

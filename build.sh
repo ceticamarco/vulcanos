@@ -1,6 +1,6 @@
 # grub config file
 mkdir -p iso_root/boot/grub/
-cat iso_root/boot/grub/grub.cfg <<EOF
+cat > iso_root/boot/grub/grub.cfg << EOF
 set timeout = 0
 set default = 0
 
@@ -13,10 +13,10 @@ EOF
 # CPU
 mkdir -p obj/
 make -C kernel/cpu
-cp kernel/cpu*.o obj/
+cp kernel/cpu/*.o obj/
 
 # Kernel
-make -C kernel/
+make -C kernel
 cp kernel/*.o obj/
 
 # Drivers

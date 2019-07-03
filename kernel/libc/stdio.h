@@ -14,6 +14,6 @@
 #include <stdarg.h>
 
 int printf(const char *format, ...);
-void puts(uint8_t *buf);
+void puts(const char *buf);
 
 #endif

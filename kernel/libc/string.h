@@ -12,13 +12,13 @@
 #include <stdint.h> // For uinx_t
 #include <stddef.h> // For size_t
 
-int32_t strcmp(const char *s1, const char *s2);
-char *itoa(int val, char *buf, int radix);
-char *uitoa(uint32_t val, char *buf, int radix);
-size_t strlen(const char *buf);
-void *memset(void *s, int c, size_t n);
+int32_t strcmp(const uint8_t *s1, const uint8_t *s2);
+uint8_t *itoa(int32_t val, uint8_t *buf, uint32_t radix);
+uint8_t *uitoa(uint32_t val, uint8_t *buf, uint32_t radix);
+size_t strlen(const uint8_t *buf);
+void *memset(void *s, uint32_t c, size_t n);
 void *memmove(void *dst, const void *src, size_t len);
-void strupper(char *str);
-void strlower(char *str);
+void strupper(uint8_t *str);
+void strlower(uint8_t *str);
 
 #endif

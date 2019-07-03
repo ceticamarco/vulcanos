@@ -6,7 +6,7 @@
 ;   https://github.com/ice-bit/iceOS  ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-global kernel_load
+global kernel_loader
 extern kernel_main
 
 section .text
@@ -23,3 +23,6 @@ section .bss
 align 4
 kernel_stack:
     resb KERNEL_STACK_SZ ; Reserver 4 KB
+
+
+
