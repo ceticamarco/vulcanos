@@ -12,7 +12,7 @@ static uint32_t fb_row = 0; // Y
 void write_cell(int16_t i, uint8_t c, uint8_t fg, uint8_t bg) {
     uint8_t *fb = VGA_PTR;
     fb[i*2] = c;
-    fb[i*2 + 1] = ((bg & 0x0F) << 4) | (fg | 0x0F);
+    fb[i*2 + 1] = ((bg & 0x0F) << 4) | (fg & 0x0F);
 }
 
 void move_cursor(uint16_t pos) {
@@ -71,7 +71,7 @@ void kprint(uint8_t *buf) {
 
 void init_prompt() {
     uint8_t *prompt = (uint8_t*)"\nuser@iceOS-$ ";
-    kprint_c(prompt, strlen(prompt), GREEN, BLACK);
+    kprint_c(prompt, strlen(prompt), LIGHT_GREEN, BLACK);
 }
 
 void clear_prompt() {

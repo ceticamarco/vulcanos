@@ -1,4 +1,4 @@
-OBJS = multiboot.asm.o kernel_loader.asm.o ports.asm.o
+OBJS = multiboot.asm.o kernel_loader.asm.o ports.asm.o gdt.asm.o
 
 ASM = nasm
 ASMFLAGS = -f elf
