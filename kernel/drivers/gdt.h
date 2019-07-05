@@ -37,7 +37,7 @@
 #define GDT_BASE 0x00000000
 #define GDT_LIMIT 0xFFFFFFFF
 // GDT granularity
-#define GDT_SEGMENT_LENGTH 0xf
+#define GDT_SEGMENT_LENGTH 0xF
 #define GDT_OPERAND_SIZE_16 0
 #define GDT_OPERAND_SIZE_32 1
 #define GDT_GRANULARITY_1K 0
@@ -49,6 +49,8 @@
 #define GDT_DATA_TYPE_READ_WRITE_ACCESSED                   0x3
 #define GDT_DATA_TYPE_READ_ONLY_EXPAND_DOWN                 0x4
 #define GDT_DATA_TYPE_READ_ONLY_EXPAND_DOWN_ACCESSED        0x5
+#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DATA                0x6
+#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DATA_ACCESSED       0x7
 #define GDT_DATA_TYPE_EXEC_ONLY                             0x8
 #define GDT_CODE_TYPE_EXEC_ONLY_ACCESSED                    0x9
 #define GDT_CODE_TYPE_EXEC_READ                             0xA
@@ -117,9 +119,9 @@ struct gdt_entry_struct {
     uint16_t limit_low;
     uint16_t base_low;
     uint8_t base_middle;
-    uint8_t base_high;
     gdt_access_t access;
     gdt_gran_t granularity;
+    uint8_t base_high;
 }__attribute__((packed));
 typedef struct gdt_entry_struct gdt_entry_t;
 
@@ -127,7 +129,7 @@ typedef struct gdt_entry_struct gdt_entry_t;
  * This is needed to locate it later */ 
 struct gdt_ptr {
     uint16_t limit;
-    uint16_t base;
+    uint32_t base;
 }__attribute__((packed));
 typedef struct gdt_ptr gdt_ptr_t;
 
