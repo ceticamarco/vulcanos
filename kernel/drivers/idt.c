@@ -1,10 +1,12 @@
 #include "idt.h"
 #include "../libc/string.h"
+#include "ports.h"
 
 // Internal method
 extern void idt_flush(idt_ptr_t*); // defined on cpu/idt.asm
 static void init_idt();
 static void idt_set_gate(uint8_t idx, void(*base), uint16_t selector, idt_flags_t flags);
+static void pic_remap(uint8_t offset1, uint8_t offset2);
 
 idt_entry_t idt_entries[256]; // 256 interrupts
 idt_ptr_t idt_ptr;
@@ -68,6 +70,9 @@ static void init_idt() {
     idt_set_gate(30, isr30, 0x08, flags);
     idt_set_gate(31, isr31, 0x08, flags);
 
+    // Remap PIC
+    pic_remap(PIC1_START_INTERRUPT, PIC2_START_INTERRUPT);
+
     // Also remap 15 entries for IRQs
     idt_set_gate(32, irq0, 0x08, flags);
     idt_set_gate(33, irq1, 0x08, flags);
@@ -90,5 +95,28 @@ static void init_idt() {
 
     // Finally enable hardware interrupts with an assembly instruction
     __asm__ __volatile__ ("sti");
+}
 
+// Taken here: http://wiki.osdev.org/8259_PIC
+static void pic_remap(uint8_t offset1, uint8_t offset2) {
+    uint8_t a1, a2;
+
+    a1 = inb(PIC1_DATA); // Save masks
+    a2 = inb(PIC2_DATA);
+
+    outb(PIC1_COMMAND, ICW1_INIT+ICW1_ICW4); // Start init sequence
+    outb(PIC2_COMMAND, ICW1_INIT+ICW1_ICW4);
+
+    outb(PIC1_DATA, offset1);
+    outb(PIC2_DATA, offset2);
+
+    outb(PIC1_DATA, 4); // Tell master PIC that there is a slave PIC at IRQ2
+    outb(PIC1_DATA, 2); // Tell salve PIC it's cascade identity
+
+    outb(PIC1_DATA, ICW4_8086);
+    outb(PIC2_DATA, ICW4_8086);
+
+    // Restore saved masks
+    outb(PIC1_DATA, a1);
+    outb(PIC2_DATA, a2);
 }
