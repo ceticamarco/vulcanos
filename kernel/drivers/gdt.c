@@ -1,5 +1,4 @@
 #include "gdt.h"
-#include "ports.h"
 
 // Internal method
 extern void gdt_flush(uint32_t); // Defined on cpu/gdt.asm

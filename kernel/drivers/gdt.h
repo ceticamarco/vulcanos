@@ -12,7 +12,7 @@
  * GDT(Global Descriptor Table) is a complex data structure used in x86 systems
  * to define memory areas.
  * Technically speaking GDT is formed by an array of 8-bytes segment descriptors,
- * the first descriptor of the GDT is always a NULL one and CANNNOT be used to allocate
+ * the first descriptor of the GDT is always a NULL one and CANNOT be used to allocate
  * memory; so we need at least two descriptors(plus the null descriptor) to successfully allocate
  * data on our memory.
  * In x86 architecture there're two methods to provide virtual memory: Segmentation and Paging:
@@ -34,14 +34,14 @@
 /* Those values were taken from Intel's developer manual */
 
 // GDT fields
-#define GDT_BASE 0x00000000
+#define GDT_BASE  0x00000000
 #define GDT_LIMIT 0xFFFFFFFF
 // GDT granularity
-#define GDT_SEGMENT_LENGTH 0xF
+#define GDT_SEGMENT_LENGTH  0xF
 #define GDT_OPERAND_SIZE_16 0
 #define GDT_OPERAND_SIZE_32 1
-#define GDT_GRANULARITY_1K 0
-#define GDT_GRANULARITY_4K 1
+#define GDT_GRANULARITY_1K  0
+#define GDT_GRANULARITY_4K  1
 // GDT access type fields
 #define GDT_DATA_TYPE_READ_ONLY                             0x0
 #define GDT_DATA_TYPE_READ_ONLY_ACCESSED                    0x1
@@ -82,10 +82,10 @@
  * P: is segment present? (bool)
  */
 struct gdt_access {
-    uint8_t type:4; // 4 Byte
-    uint8_t dt:1; // 1 Byte
-    uint8_t dpl:2; // 2 Byte
-    uint8_t p:1; // 1 Byte
+    uint8_t type: 4; // 4 Byte
+    uint8_t dt: 1; // 1 Byte
+    uint8_t dpl: 2; // 2 Byte
+    uint8_t p: 1; // 1 Byte
 }__attribute__((packed));
 typedef struct gdt_access gdt_access_t;
 
@@ -98,10 +98,10 @@ typedef struct gdt_access gdt_access_t;
  * G: granularity  (0 = 1 Byte, 1 = 4KiB)
  */
 struct gdt_granularity {
-    uint8_t seglen:4;
-    uint8_t zero:2;
-    uint8_t d:1;
-    uint8_t g:1;
+    uint8_t seglen: 4;
+    uint8_t zero: 2;
+    uint8_t d: 1;
+    uint8_t g: 1;
 }__attribute__((packed));
 typedef struct gdt_granularity gdt_gran_t;
 
