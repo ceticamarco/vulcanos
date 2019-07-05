@@ -15,7 +15,7 @@ extern irq_handler ; Defined in drivers/isr.h
     isr%1:
         cli             ; Disable interrupts
         push byte 0     ; Push dummy error code
-        push byte 1     ; Push interrupt number
+        push byte %1    ; Push interrupt number
         jmp isr_common  ; goto ISR handler
 %endmacro
 

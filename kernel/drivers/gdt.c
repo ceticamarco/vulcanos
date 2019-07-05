@@ -65,7 +65,7 @@ static void init_gdt() {
 static gdt_entry_t construct_entry(gdt_access_t access) {
     gdt_entry_t entry = (struct gdt_entry_struct) {
         .base_low = GDT_BASE & 0xFFFF,
-        .base_middle = (GDT_BASE >> 16) % 0xFF,
+        .base_middle = (GDT_BASE >> 16) & 0xFF,
         .base_high = (GDT_BASE >> 24) & 0xFF,
         .limit_low = (GDT_LIMIT & 0xFFFF),
         .access = access,

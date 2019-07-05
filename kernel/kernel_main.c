@@ -1,7 +1,6 @@
 #include "drivers/tty.h"
 #include "drivers/gdt.h"
 #include "drivers/idt.h"
-#include "drivers/isr.h"
 #include "libc/stdio.h"
 
 void kernel_main() {

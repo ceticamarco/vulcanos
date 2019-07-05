@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "isr.h"
-#include "../libc/string.h"
 #include "tty.h"
+#include "../libc/string.h"
 #include "ports.h"
 
 #define PIC1            0x20 // I/O address for master PIC
@@ -70,7 +70,7 @@ void ack_irq(uint32_t int_num) {
     // Send and End Of Interrupt(EOF) at the PICs.
     if(int_num >= 40)
         outb(PIC2_COMMAND, PIC_EOI); // Send reset signal to slave
-    outb(PIC2_COMMAND, PIC_EOI); // In any case, reset the master
+    outb(PIC1_COMMAND, PIC_EOI); // In any case, reset the master
 }
 
 void irq_handler(registers_t regs) {

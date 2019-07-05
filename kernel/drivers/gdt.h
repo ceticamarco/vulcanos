@@ -49,8 +49,8 @@
 #define GDT_DATA_TYPE_READ_WRITE_ACCESSED                   0x3
 #define GDT_DATA_TYPE_READ_ONLY_EXPAND_DOWN                 0x4
 #define GDT_DATA_TYPE_READ_ONLY_EXPAND_DOWN_ACCESSED        0x5
-#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DATA                0x6
-#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DATA_ACCESSED       0x7
+#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DOWN                0x6
+#define GDT_DATA_TYPE_READ_WRITE_EXPAND_DOWN_ACCESSED       0x7
 #define GDT_DATA_TYPE_EXEC_ONLY                             0x8
 #define GDT_CODE_TYPE_EXEC_ONLY_ACCESSED                    0x9
 #define GDT_CODE_TYPE_EXEC_READ                             0xA
