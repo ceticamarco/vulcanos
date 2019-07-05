@@ -1,6 +1,7 @@
 #include "drivers/tty.h"
 #include "drivers/gdt.h"
 #include "drivers/idt.h"
+#include "drivers/timer.h"
 #include "libc/stdio.h"
 
 void kernel_main() {
@@ -9,7 +10,8 @@ void kernel_main() {
 
     clear_prompt();
     init_prompt(); // Initialize frame buffer
-    puts("Hello World!");
+    //puts("Hello World!");
+    init_timer(1);
 
     /*
     // Testing some interrupts

@@ -7,6 +7,8 @@
  ***************************************/
 #ifndef _GDT_H_
 #define _GDT_H_
+
+#include <stdint.h>
 /*
  * First a bit of theory:
  * GDT(Global Descriptor Table) is a complex data structure used in x86 systems
@@ -28,8 +30,6 @@
  * if it is has been overwritten during some other tasks. So it's a good idea to implement
  * a new GDT ourself.
  */
-
-#include <stdint.h>
 
 /* Those values were taken from Intel's developer manual */
 

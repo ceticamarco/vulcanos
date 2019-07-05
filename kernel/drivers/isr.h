@@ -7,6 +7,9 @@
  ***************************************/
 #ifndef _ISR_H_
 #define _ISR_H_
+
+#include <stdint.h>
+
 /*
  * When we implement ISRs we have to keep in mind that the first 32 interrupts(and so the
  * first 32 ISRs) are reserved by the CPU to signal the kernel about critical actions, 
@@ -35,8 +38,6 @@
  * 17 - Alignment check exception
  * 18 - Machine check exception
  * 19-31 - Reserved */
-
-#include <stdint.h>
 
 #define IRQ0    32
 #define IRQ1    33

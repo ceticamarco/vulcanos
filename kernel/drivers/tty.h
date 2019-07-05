@@ -11,6 +11,8 @@
 
 #include <stdint.h>
 
+// TODO: write something about Frame Buffer
+
 // VGA colors
 enum TTY_COLORS {
     BLACK, // 0

@@ -7,6 +7,8 @@
  ***************************************/
 #ifndef _IDT_H_
 #define _IDT_H_
+
+#include <stdint.h>
 /*
  * First a bit of theory:
  * Sometimes you want to interrupt the processor from what it is currently doing 
@@ -17,8 +19,6 @@
  * is another data structure(organized the same way as the GDT) that will provide a list
  * of interrupts handlers(ISRs) to the CPU.
  */
-
-#include <stdint.h>
 
 // Reserved bits in IDT entries
 #define IDT_FLAG_RESERVED 0x0E
