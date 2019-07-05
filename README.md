@@ -20,12 +20,13 @@ Then you can run those commands:
 iceOS already have/will have the following features:  
 - [x] Bare metal booting;
 - [x] VGA driver;
-- [ ] Interrupts implementation;
+- [x] Interrupts implementation;
 - [ ] PIC & PIT implementation;
 - [ ] PS2 driver;
-- [ ] Support for x86 architecture;
-- [x] GRUB as bootloader.
-
+- [x] Support for x86 architecture;
+- [x] GRUB as bootloader;
+- [ ] Paging;
+- [ ] Dynamic memory allocation(heap).
 
 ## Resources
 This project is made with different kind of resources and different kind of knowledges, before starting it i read/studied the following resources:
@@ -34,5 +35,6 @@ This project is made with different kind of resources and different kind of know
 - [Operating System Concepts - Silberschatz (2016)](https://www.amazon.it/Sistemi-operativi-Concetti-ed-esempi/dp/8865183713/ref=pd_lpo_sbs_14_img_1?_encoding=UTF8&psc=1&refRID=4A5T2C7KKH7RA0K1T7RV)
 - [The Art Of Electronics - Horowitz (2015)](https://www.amazon.it/gp/product/0521809266/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
 - [OSDev wiki](https://wiki.osdev.org/Main_Page)
+- [The Little Book About OS Development](https://littleosbook.github.io/)
 ## License
 iceOS is released under GPLv3, you can obtain a copy of this license by cloning the repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.

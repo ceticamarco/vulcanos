@@ -4,10 +4,17 @@
 #include "libc/stdio.h"
 
 void kernel_main() {
-    clear_prompt();
-    init_prompt(); // Initialize frame buffer
     gdt_setup(); // Setup Global Descriptor Table
     idt_setup(); // Setup Interrupt Descriptor Table
 
+    clear_prompt();
+    init_prompt(); // Initialize frame buffer
     puts("Hello World!");
+
+    /*
+    // Testing some interrupts
+    asm("int $0"); // Division by zero
+    asm("int $4"); // Stack overflow
+    asm("int $1"); // Page fault 
+    */
 }

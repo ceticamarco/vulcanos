@@ -56,7 +56,8 @@ void isr_handler(registers_t regs) {
         isr_t handler = interrupt_handler[regs.int_num];
         handler(regs);
     } else {
-        kprint_c((uint8_t*)"Received interrupt: ", 20, LIGHT_BROWN, BLACK);
+        uint8_t *buf = (uint8_t*)"\nReceived interrupt: ";
+        kprint_c((uint8_t*)buf,strlen(buf), LIGHT_BROWN, BLACK);
         kprint_c(interrupts_messages[(uint8_t)regs.int_num], 
                  strlen(interrupts_messages[(uint8_t)regs.int_num]),
                  WHITE,

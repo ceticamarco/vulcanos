@@ -10,7 +10,7 @@ global outb ; Output from port
 global inb  ; Input to port
 
 outb:
-    mov al, [esp + 3]
+    mov al, [esp + 8]
     mov dx, [esp + 4]
     out dx, al
     ret

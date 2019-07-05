@@ -97,7 +97,7 @@ static void init_idt() {
     __asm__ __volatile__ ("sti");
 }
 
-// Taken here: http://wiki.osdev.org/8259_PIC
+// Taken from: http://wiki.osdev.org/8259_PIC
 static void pic_remap(uint8_t offset1, uint8_t offset2) {
     uint8_t a1, a2;
 
