@@ -31,7 +31,7 @@ void about() {
     printf_color(
         "iceOS is a x86 monolithic kernel written in C from scratch.\n"  
         "This project doesn't aim to be a fully functional operating system\n"
-        "with tons of drivers and graphical applications,\nit's just a learning tool" 
+        "with tons of drivers and graphical applications,\nit's just a learning tool " 
         "to teach myself concepts like\nOperating Systems, Computer Architecture and Digital Electronics.\n" 
         "\n\n"
         "iceOS comes with the following features:\n"
