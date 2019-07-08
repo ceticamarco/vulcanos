@@ -63,7 +63,6 @@ void isr_handler(registers_t regs) {
                  WHITE,
                  BLACK
         );
-        kprint((uint8_t*)"\n");
     }
 }
 

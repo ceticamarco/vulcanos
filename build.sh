@@ -27,6 +27,10 @@ cp kernel/drivers/*.o obj/
 make -C kernel/libc
 cp kernel/libc/*.o obj/
 
+# Shell
+make -C kernel/shell
+cp kernel/shell/*.o obj/
+
 # Linking
 i686-elf-ld -melf_i386 -nostdlib -O2 -T link.ld -o isodir/boot/iceOS.bin obj/*.o
 

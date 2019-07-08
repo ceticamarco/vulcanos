@@ -8,7 +8,7 @@
  * @param port: Output port to send data to.
  * @param data: The actual data to send to port
 */
-void outb(uint16_t port, uint8_t data);
+void outb(uint16_t port, uint16_t data);
 
 /* inb:
  * Fetch data from a port, return a char

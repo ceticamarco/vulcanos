@@ -21,12 +21,10 @@ iceOS already have/will have the following features:
 - [x] Bare metal booting;
 - [x] VGA driver;
 - [x] Interrupts implementation;
-- [ ] PIC & PIT implementation;
-- [ ] PS2 driver;
+- [x] PIC & PIT implementation;
+- [x] PS2 driver;
 - [x] Support for x86 architecture;
 - [x] GRUB as bootloader;
-- [ ] Paging;
-- [ ] Dynamic memory allocation(heap).
 
 ## Resources
 This project is made with different kind of resources and different kind of knowledges, before starting it i read/studied the following resources:

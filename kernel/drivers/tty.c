@@ -6,7 +6,7 @@
 // Also define a 2 byte pointer because cells are 16 bits wide
 #define UVGA_PTR ((uint16_t *)VIDEO_MEM_ADDR)
 
-static uint32_t fb_col = 0; // X
+static uint32_t fb_col = 1; // X
 static uint32_t fb_row = 0; // Y
 
 void write_cell(int16_t i, uint8_t c, uint8_t fg, uint8_t bg) {
@@ -70,12 +70,12 @@ void kprint(uint8_t *buf) {
 }
 
 void init_prompt() {
-    uint8_t *prompt = (uint8_t*)"\nuser@iceOS-$ ";
-    kprint_c(prompt, strlen(prompt), LIGHT_GREEN, BLACK);
+    uint8_t *prompt = (uint8_t*)"\nring0@iceOS-$ ";
+    kprint_c(prompt, strlen(prompt), LIGHT_RED, BLACK);
 }
 
 void clear_prompt() {
-    fb_col = 0;
+    fb_col = 1;
     fb_row = 0;
 
     for(uint32_t i = 0; i < (VGA_WIDTH * VGA_HEIGHT); i++)
@@ -100,6 +100,6 @@ void newline() {
     else // Otherwise scroll framebuffer
         scroll();
 
-    fb_col = 0;
+    fb_col = 1;
     move_cursor(fb_col + (fb_row * VGA_WIDTH));
 }

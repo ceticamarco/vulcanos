@@ -5,16 +5,16 @@
  *       Released under GPLv3         *
  * https://github.com/ice-bit/iceOS   *
  ***************************************/
-
-#ifndef _STDIO_H_
-#define _STDIO_H_
+#ifndef _SHELL_H_
+#define _SHELL_H_
 
 #include <stdint.h>
-#include <stddef.h>
-#include <stdarg.h>
 
-int printf(const char *format, ...);
-int printf_color(const char *format, uint8_t fg, uint8_t bg); // Only for string for now
-void puts(const char *buf);
+#define bit(n) (1 << (n))
+#define check_flag(flags, n) ((flags) & bit(n))
+
+void helper();
+void processCommand(uint8_t *cmd);
+void iceos_ascii_logo();
 
 #endif
