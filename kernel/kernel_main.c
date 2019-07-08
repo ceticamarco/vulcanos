@@ -1,3 +1,10 @@
+/**************************************
+ *          iceOS Kernel              *
+ * Developed by Marco 'icebit' Cetica * 
+ *            (c) 2019                *
+ *       Released under GPLv3         *
+ * https://github.com/ice-bit/iceOS   *
+ ***************************************/
 #include "drivers/tty.h"
 #include "drivers/gdt.h"
 #include "drivers/idt.h"
