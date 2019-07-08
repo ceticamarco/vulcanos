@@ -9,13 +9,12 @@ uint32_t tick = 0;
 
 static void timer_callback(registers_t regs) {
     tick++;
-    uint8_t buf[8];
+    /* uint8_t buf[8];
     itoa(tick, buf, 10);
     kprint((uint8_t*)"Time: ");
     uitoa(tick, buf, 10);
     kprint((uint8_t*)buf);
-    kprint((uint8_t*)"\n");
-
+    kprint((uint8_t*)"\n");*/
     // Cast to void unused parameter
     UNUSED_PAR(regs);
 }
