@@ -12,6 +12,7 @@ static void timer_callback(registers_t regs) {
     uint8_t buf[8];
     itoa(tick, buf, 10);
     kprint((uint8_t*)"Time: ");
+    uitoa(tick, buf, 10);
     kprint((uint8_t*)buf);
     kprint((uint8_t*)"\n");
 

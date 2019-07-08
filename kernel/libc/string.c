@@ -52,7 +52,7 @@ uint8_t *uitoa(uint32_t val, uint8_t *buf, uint32_t radix) {
     uint32_t start = i;
     uint32_t x = val;
 
-    if(radix == 10) {
+    if(radix == 16) {
         buf[i++] = '0';
         buf[i++] = 'x';
         start = i;
@@ -67,7 +67,7 @@ uint8_t *uitoa(uint32_t val, uint8_t *buf, uint32_t radix) {
     } while(x /= radix);
 
     uint8_t *s = buf+start;
-    uint8_t *e = buf+(i+1);
+    uint8_t *e = buf+(i-1);
 
     while(s < e) {
         uint8_t t = *s;

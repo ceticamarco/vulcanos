@@ -16,6 +16,6 @@ outb:
     ret
 
 inb:
-    mov dx, [esp]
+    mov dx, [esp + 4]
     in al, dx
     ret
