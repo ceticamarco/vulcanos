@@ -82,10 +82,10 @@
  * P: is segment present? (bool)
  */
 struct gdt_access {
-    uint8_t type: 4; // 4 Byte
-    uint8_t dt: 1; // 1 Byte
-    uint8_t dpl: 2; // 2 Byte
-    uint8_t p: 1; // 1 Byte
+    uint8_t type: 4; // 4 Bits
+    uint8_t dt: 1; // 1 Bit
+    uint8_t dpl: 2; // 2 Bits
+    uint8_t p: 1; // 1 Bits
 }__attribute__((packed));
 typedef struct gdt_access gdt_access_t;
 
