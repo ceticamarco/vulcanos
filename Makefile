@@ -4,6 +4,9 @@ iso:
 run:
 	qemu-system-x86_64 -cdrom iceOS.iso
 
+run-curses:
+	qemu-system-x86_64 -cdrom iceOS.iso -curses
+
 bochs:
 	bochs -f bochs_cfg -q
 
