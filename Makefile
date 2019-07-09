@@ -9,5 +9,6 @@ bochs:
 
 clean:
 	rm -rf obj/ kernel/*.o kernel/cpu/*.o
+	rm -rf kernel/shell/*.o
 	rm -rf kernel/drivers/*.o kernel/libc/*.o
 	rm -rf iceOS.iso bochslog.txt commands isodir
