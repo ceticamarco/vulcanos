@@ -1,6 +1,6 @@
 before_script:
-  - ld -s /usr/bin/gcc /usr/bin/i686-elf-gcc
-  - ld -s /usr/bin/ld /usr/bin/i686-elf-ld
+  - ln -s /usr/bin/gcc /usr/bin/i686-elf-gcc
+  - ln -s /usr/bin/ld /usr/bin/i686-elf-ld
 test:
   script:
     - make clean # Remove old *.o files
