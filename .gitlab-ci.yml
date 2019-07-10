@@ -1,0 +1,4 @@
+test:
+  script:
+    - make clean # Remove old *.o files
+    - ./build.sh # Compile
