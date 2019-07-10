@@ -1,4 +1,4 @@
-# iceOS
+# iceOS [![pipeline status](https://git.marcocetica.com/icebit/iceos/badges/master/pipeline.svg)](https://git.marcocetica.com/icebit/iceos/commits/master)
 iceOS is a x86 monolithic kernel written in C from scratch.  
 This project doesn't aim to be a fully functional operating system
 with tons of drivers and graphical applications, it's just a learning tool to teach myself concepts like Operating Systems, Computer Architecture and Digital Electronics.
@@ -15,6 +15,9 @@ Before generating an ISO you have to compile a [cross compiler](https://wiki.osd
 Then you can run those commands:
 1. Type `./build.sh` to compile the system and to create an ISO
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
+
+Otherwise you can download an already compiled ISO file 
+[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `ab3d5b8307015461b44e62d0c2d42806`)
 
 ## Features
 iceOS already have/will have the following features:  
@@ -36,3 +39,7 @@ This project is made with different kind of resources and different kind of know
 - [The Little Book About OS Development](https://littleosbook.github.io/)
 ## License
 iceOS is released under GPLv3, you can obtain a copy of this license by cloning the repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.
+
+## Screenshot
+Here's some screenshot of iceOS running in QEMU and even in real hardware!  
+![gif](imgs/example.gif)
