@@ -22,7 +22,7 @@ iceOS already have/will have the following features:
 - [x] VGA driver;
 - [x] Interrupts implementation;
 - [x] PIC & PIT implementation;
-- [x] PS2 driver;
+- [x] PS/2 driver;
 - [x] Support for x86 architecture;
 - [x] GRUB as bootloader;
 
