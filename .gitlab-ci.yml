@@ -1,5 +1,5 @@
 before_script:
-  - ld -s /usr/bin/gcc /usrbin/i686-elf-gcc
+  - ld -s /usr/bin/gcc /usr/bin/i686-elf-gcc
   - ld -s /usr/bin/ld /usr/bin/i686-elf-ld
 test:
   script:
