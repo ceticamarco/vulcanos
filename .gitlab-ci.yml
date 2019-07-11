@@ -3,5 +3,4 @@ before_script:
   - ln -s /usr/bin/ld /usr/bin/i686-elf-ld
 test:
   script:
-    - make clean # Remove old *.o files
-    - ./build.sh # Compile iceOS
+    - make clean all # Compile
