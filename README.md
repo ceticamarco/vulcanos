@@ -1,5 +1,5 @@
 <div align="center">
-<img src="src/iceOS_logo_full_concept.png" width="350px">
+<img src="imgs/iceOS_logo_full_concept.png" width="350px">
 <br><br>
 <a href="https://git.marcocetica.com/icebit/iceos/commits/master"><img alt="pipeline status" src="https://git.marcocetica.com/icebit/iceos/badges/master/pipeline.svg" /></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue"></a>
@@ -13,7 +13,7 @@
 
 # About iceOS
 <div align="center">
-<img src="src/example.png"  />
+<img src="imgs/example.png"  />
 <h6><i>iceOS running under QEMU</h6></i>
 </div><br /><br />
 
