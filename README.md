@@ -1,5 +1,23 @@
-# iceOS [![pipeline status](https://git.marcocetica.com/icebit/iceos/badges/master/pipeline.svg)](https://git.marcocetica.com/icebit/iceos/commits/master)
-iceOS is a x86 monolithic kernel written in C from scratch.  
+<div align="center">
+<img src="src/iceOS_logo_full_concept.png" width="350px">
+<br><br>
+<a href="https://git.marcocetica.com/icebit/iceos/commits/master"><img alt="pipeline status" src="https://git.marcocetica.com/icebit/iceos/badges/master/pipeline.svg" /></a>
+<a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue"></a>
+<img src="https://img.shields.io/github/repo-size/ice-bit/iceOS?color=purple" />
+<img src="https://img.shields.io/badge/platform-intel--x86-brown" />
+<img src="https://img.shields.io/badge/language-C-black" />  
+
+
+<h6><i>Simple kernel written in C for Intel x86 CPUs</i></h6>
+</div>
+
+# About iceOS
+<div align="center">
+<img src="src/example.png"  />
+<h6><i>iceOS running under QEMU</h6></i>
+</div><br /><br />
+
+**iceOS** is a x86 monolithic kernel written in C from scratch.  
 This project doesn't aim to be a fully functional operating system
 with tons of drivers and graphical applications, it's just a learning tool to teach myself concepts like Operating Systems, Computer Architecture and Digital Electronics.
 
@@ -37,9 +55,6 @@ This project is made with different kind of resources and different kind of know
 - [The Art Of Electronics - Horowitz (2015)](https://www.amazon.it/gp/product/0521809266/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
 - [OSDev wiki](https://wiki.osdev.org/Main_Page)
 - [The Little Book About OS Development](https://littleosbook.github.io/)
+- [I actually started this project due to skiftOS](https://github.com/skiftOS/skift)
 ## License
 iceOS is released under GPLv3, you can obtain a copy of this license by cloning the repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.
-
-## Screenshot
-Here's some screenshot of iceOS running in QEMU and even in real hardware!  
-![gif](imgs/example.gif)
