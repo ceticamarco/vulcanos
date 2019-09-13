@@ -136,5 +136,4 @@ typedef struct gdt_ptr gdt_ptr_t;
 /* GDT Kernel API */
 void gdt_setup();
 
-
 #endif
