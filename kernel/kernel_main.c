@@ -35,5 +35,4 @@ void kernel_main() {
     
     iceos_ascii_logo();
     init_prompt(); // Initialize frame buffer
-
 }

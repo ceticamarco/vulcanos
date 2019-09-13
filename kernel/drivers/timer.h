@@ -33,7 +33,7 @@
 void init_timer(uint32_t frequency);
 uint32_t tick;
 /* Since regs parameter(from timer_callback) will be unused
- * GCC(with -Werror flag) will dump an error, so we avoid this
+ * GCC(with -Werror flag) will throw an error, so we can avoid this
  * using the following macro
  */
 #define UNUSED_PAR(x) (void)(x)

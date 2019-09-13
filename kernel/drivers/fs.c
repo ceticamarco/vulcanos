@@ -18,20 +18,16 @@ uint32_t write_fs(fs_node_t *node, uint32_t offset, uint32_t size, uint8_t *buff
         return 0;
 }
 
-void open_fs(fs_node_t *node, uint8_t read, uint8_t write) {
+void open_fs(fs_node_t *node) {
     // Check if inode got a open callback from the kernel
     if(node->open != 0)
         return node->open(node);
-    else
-        return 0;
 }
 
 void close_fs(fs_node_t *node) {
     // Check if inode got a close callback from the kernel
-    if(node->close =! 0)
+    if(node->close != 0)
         return node->close(node);
-    else
-        return 0;
 }
 
 struct dirent *readdir_fs(fs_node_t *node, uint32_t index) {
