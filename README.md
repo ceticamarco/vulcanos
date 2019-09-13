@@ -31,7 +31,7 @@ Before generating an ISO you have to compile a [cross compiler](https://wiki.osd
 - mtools(if you are on Arch Linux)
 
 Then you can run those commands:
-1. Type `./build.sh` to compile the system and to create an ISO
+1. Type `make all` to compile the system and to create an ISO
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
 
 Otherwise you can download an already compiled ISO file 
