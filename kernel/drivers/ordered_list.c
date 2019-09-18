@@ -29,7 +29,7 @@ ordered_list_t place_ordered_list(void *addr, uint32_t max_size, lessthan_predic
 
 // Destroy an ordered list
 void destroy_ordered_list(ordered_list_t *array) {
-    // Not ready yet
+    // Not ready yet TODO:
 }
 
 // Insert item into the array
