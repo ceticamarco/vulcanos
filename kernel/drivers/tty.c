@@ -69,6 +69,29 @@ void kprint(uint8_t *buf) {
     kprint_c(buf, strlen(buf), WHITE, BLACK);
 }
 
+void kprint_dec(uint32_t num) {
+    if(num == 0) {
+        const uint8_t buf = (uint8_t)'0';
+        kprint_c(buf, strlen(buf), WHITE, BLACK);;
+        return;
+    }
+    int32_t acc = num;
+    uint8_t c[32];
+    uint32_t i = 0;
+    while(acc > 0) {
+        c[i] = '0' + acc%10;
+        acc /= 10;
+        i++;
+    }
+    c[i] = 0;
+    uint8_t c2[32];
+    c2[i--] = 0;
+    uint32_t j = 0;
+    while(i >= 0)
+        c2[i--] = c[j++];
+    kprint(c2);
+}
+
 void init_prompt() {
     uint8_t *prompt = (uint8_t*)"\nring0@iceOS-$ ";
     kprint_c(prompt, strlen(prompt), LIGHT_RED, BLACK);

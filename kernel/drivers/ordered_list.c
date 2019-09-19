@@ -34,7 +34,7 @@ void destroy_ordered_list(ordered_list_t *array) {
 
 // Insert item into the array
 void insert_ordered_list(type_t item, ordered_list_t *array) {
-    ASSERT(array->less_then); // TODO: implement assert
+    ASSERT(array->less_then);
     uint32_t iterator = 0;
     while(iterator < array->size && array->less_then(array->array[iterator], item))
         iterator++;

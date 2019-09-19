@@ -1,3 +1,17 @@
+/**************************************
+ *          iceOS Kernel              *
+ * Developed by Marco 'icebit' Cetica * 
+ *            (c) 2019                *
+ *       Released under GPLv3         *
+ * https://github.com/ice-bit/iceOS   *
+ ***************************************/
+
+
+/*** Heap implementation from James Molloy's tutorial:
+ * http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html ***/
+
+
+
 /* This heap algorithm uses two different data structures: blocks and holes.
  * Blocks: Contiguous areas of memory containing user data
  * Holes: Special kind of blocks that are not in use, this is the result

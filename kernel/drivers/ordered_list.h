@@ -1,3 +1,10 @@
+/**************************************
+ *          iceOS Kernel              *
+ * Developed by Marco 'icebit' Cetica * 
+ *            (c) 2019                *
+ *       Released under GPLv3         *
+ * https://github.com/ice-bit/iceOS   *
+ ***************************************/
 #ifndef ORDERED_LIST
 #define ORDERED_LIST
 

@@ -53,6 +53,7 @@ void cursor_adv();
 void backspace();
 void kprint_c(uint8_t *buf, uint32_t len, uint8_t fg, uint8_t bg);
 void kprint(uint8_t *buf);
+void kprint_dec(uint32_t num);
 void init_prompt();
 void clear_prompt();
 void clear_row(uint8_t row);
