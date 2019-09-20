@@ -204,5 +204,36 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
         insert_ordered_list((void*)hole_head, &heap->index);
     }
     // Finally, return the new hole
-    return (void*)(uint32_t)block_header+sizeof(header_t));
+    return (void*)((uint32_t)block_header+sizeof(header_t));
+}
+
+void free(void *p, heap_t *heap) {
+    // Exit for null pointer
+    if(p == NULL)
+        return;
+    
+    // Retrieve the header and the footer for this pointer
+    header_t *head = (header_t*) ((uint32_t)p - sizeof(header_t));
+    footer_t *foot = (footer_t*) ((uint32_t)head + head->size - sizeof(footer_t));
+
+    ASSERT(head->magic == HEAP_MAGIC);
+    ASSERT(foot->magic == HEAP_MAGIC);
+
+    // Set hole flag
+    head->is_hole = 1;
+    // Add header to free hole's index.
+    int8_t add_to_free_hole = 1;
+
+    // If left-most thing is a footer, then:
+    footer_t *test_footer = (footer_t*) ((uint32_t)head - sizeof(footer_t));
+    if(test_footer->magic == HEAP_MAGIC && 
+        test_footer->header->is_hole == 1) {
+            uint32_t cache_size = head->size; // Save size
+            head = test_footer->header; // Change header's size with new one
+            foot->header = head; // Update header's pointer
+            head->size += cache_size; 
+            add_to_free_hole = 0;
+        }
+    
+
 }
