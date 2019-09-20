@@ -71,13 +71,13 @@ void kprint(uint8_t *buf) {
 
 void kprint_dec(uint32_t num) {
     if(num == 0) {
-        const uint8_t buf = (uint8_t)'0';
+        uint8_t *buf = (uint8_t*)'0';
         kprint_c(buf, strlen(buf), WHITE, BLACK);;
         return;
     }
     int32_t acc = num;
     uint8_t c[32];
-    uint32_t i = 0;
+    int32_t i = 0;
     while(acc > 0) {
         c[i] = '0' + acc%10;
         acc /= 10;
