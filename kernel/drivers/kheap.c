@@ -2,9 +2,51 @@
 
 // Extern variables are declared in the linker script
 extern uint32_t end;
-uint32_t placement_addr = (uint32_t)&end;
 extern page_directory_t *kernel_directory; // FIXME:
+uint32_t placement_addr = (uint32_t)&end;
 heap_t *kheap = 0;
+
+uint32_t kmalloc_init(uint32_t sz, int32_t align, uint32_t *phys) {
+    if(kheap != 0) {
+        void *addr = alloc(sz, (uint8_t)align, &kheap);
+        if(phys != 0) {
+            page_t *page = get_page((uint32_t)addr, 0, kernel_directory);
+            *phys = page->frame*0x1000 + (uint32_t)addr&0xFFF;
+        }
+        return (uint32_t)addr;
+    } else {
+        if(align == 1 && (placement_addr & 0xFFFFF000)) {
+            // Align
+            placement_addr &= 0xFFFFF000;
+            placement_addr += 0x1000;
+        } 
+        if(phys)
+            *phys = placement_addr;
+        uint32_t tmp = placement_addr;
+        placement_addr += sz;
+        return tmp;
+    }
+}
+
+void kfree(void *p) {
+    free(p, kheap);
+}
+
+uint32_t kmalloc_a(uint32_t sz) {
+    return kmalloc_int(sz, 1, 0);
+}
+
+uint32_t kmalloc_p(uint32_t sz, uint32_t *phys) {
+    return kmalloc_int(sz, 0, phys);
+}
+
+uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys) {
+    return kmalloc_int(sz, 1, phys);
+}
+
+uint32_t kmalloc(uint32_t sz) {
+    return kmalloc_int(sz, 0, 0);
+}
 
 /* The following function is a simple method to find the smallest hole that
  * fit user space request, since we will do this process many times, it's a good
@@ -37,7 +79,7 @@ static int8_t header_t_less_than(void *a, void *b) {
 }
 
 heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervisor, uint8_t readonly) {
-    heap_t *heap = (heap_t*)kmalloc(sizeof(heap_t)); //TODO: implement kmalloc
+    heap_t *heap = (heap_t*)kmalloc(sizeof(heap_t));
 
     ASSERT(start%0x1000 == 0);
     ASSERT(end%0x1000 == 0);
@@ -224,7 +266,7 @@ void free(void *p, heap_t *heap) {
     // Add header to free hole's index.
     int8_t add_to_free_hole = 1;
 
-    // If left-most thing is a footer, then:
+    // If left-most thing is a footer, then perform left unification
     footer_t *test_footer = (footer_t*) ((uint32_t)head - sizeof(footer_t));
     if(test_footer->magic == HEAP_MAGIC && 
         test_footer->header->is_hole == 1) {
@@ -235,5 +277,42 @@ void free(void *p, heap_t *heap) {
             add_to_free_hole = 0;
         }
     
+    header_t *test_header = (header_t*) ((uint32_t)foot + sizeof(footer_t));
+    if(test_header->magic == HEAP_MAGIC && test_header->is_hole) {
+        head->size += test_header->size; // Increase size
+        test_footer = (footer_t*) ((uint32_t)test_header * test_header->size - sizeof(footer_t));
+        foot = test_footer;
+        // remove this header from the index
+        uint32_t it = 0;
+        while((it < heap->index.size) && (lookup_ordered_list(it, &heap->index) != (void*)test_header))
+            it++;
+        
+        // Check if we found the item
+        ASSERT(it < heap->index.size);
+        // Then remove it
+        remove_ordered_list(it, &heap->index);
+    }
+
+    // Contract footer if it is at end address
+    if((uint32_t)foot+sizeof(footer_t) == heap->end_address) {
+        uint32_t old_len = heap->end_address-heap->start_address;
+        uint32_t new_len = contract((uint32_t)head - heap->start_address, heap);
+        // Check header size after resizing
+        if(head->size - (old_len-new_len) > 0) {
+            head->size -= old_len-new_len;
+            foot = (footer_t*) ((uint32_t)head + head->size - sizeof(footer_t));
+            foot->magic = HEAP_MAGIC;
+            foot->header = head;
+        } else { // Remove empty holes, this reduce fragmentation
+            uint32_t it = 0;
+            while((it < heap->index.size) && (lookup_ordered_list(it, &heap->index) != (void*)test_header))
+                it++;
+            // If nothing has been found, nothing will be removed
+            if(it < heap->index.size)
+                remove_ordered_list(it, &heap->index);
+        }
+    }
+    if(add_to_free_hole == 1)
+        insert_ordered_list((void*) head, &heap->index);
 
 }
