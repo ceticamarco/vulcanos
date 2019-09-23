@@ -1,35 +1,28 @@
 ENTRY(kernel_loader)
+SECTIONS
+{
 
-. = 0x00100000;
-
-SECTIONS {
-
-    .boot ALIGN (0x1000):
+    .text 0x100000 :
     {
-        *(.multiboot)
-    }
-
-    .text ALIGN (0x1000):
-    {
+        code = .; _code = .; __code = .;
         *(.text)
+        . = ALIGN(4096);
     }
 
-    .rodata ALIGN (0x1000):
+    .data :
     {
-        *(.rodata*)
-    }
-
-    .data ALIGN (0x1000):
-    {
+        data = .; _data = .; __data = .;
         *(.data)
+        *(.rodata)
+        . = ALIGN(4096);
     }
 
-    .bss ALIGN (0x1000):
+    .bss :
     {
-        *(COMMON)
+        bss = .; _bss = .; __bss = .;
         *(.bss)
+        . = ALIGN(4096);
     }
 
+    end = .; _end = .; __end = .;
 }
-
-end = .;

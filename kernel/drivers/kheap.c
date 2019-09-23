@@ -1,8 +1,8 @@
 #include "kheap.h"
 
-// Extern variables are declared in the linker script
+// end is declared in the linker script
 extern uint32_t end;
-extern page_directory_t *kernel_directory; // FIXME:
+extern page_directory_t *kernel_directory;
 uint32_t placement_addr = (uint32_t)&end;
 heap_t *kheap = 0;
 

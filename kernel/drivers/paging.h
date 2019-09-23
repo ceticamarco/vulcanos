@@ -3,11 +3,12 @@
 
 #include <stdint.h>
 #include "isr.h"
+#include "tty.h"
 #include "kheap.h"
 
 typedef struct page {
     uint32_t present : 1; // Presence in memory of single page
-    uint32_t fw : 1; // if set read write otherwise read only
+    uint32_t rw : 1; // if set read write otherwise read only
     uint32_t user : 1;  // Supervisored mode only if cleared
     uint32_t accessed : 1; // true if page has been accessed since last refresh
     uint32_t dirty : 1; // Same as above for write.

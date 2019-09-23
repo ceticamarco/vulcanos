@@ -34,6 +34,7 @@
 
 #include <stdint.h>
 #include "ordered_list.h"
+#include "paging.h"
 
 // Data structure for single block/hole
 typedef struct {
