@@ -9,9 +9,6 @@
 #define ORDERED_LIST_H
 
 #include <stdint.h>
-#include "kheap.h"
-#include "../cpu/assert.h"
-#include "../libc/string.h"
 
 /* Our list is always in a 'sorted state',
  * it can store anything that can be casted

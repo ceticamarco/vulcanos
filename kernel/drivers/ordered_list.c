@@ -1,4 +1,7 @@
 #include "ordered_list.h"
+#include "kheap.h"
+#include "../cpu/assert.h"
+#include "../libc/string.h"
 
 uint8_t standard_lessthan_predicate(type_t a, type_t b) {
     if(a < b)

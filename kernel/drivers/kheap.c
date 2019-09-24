@@ -251,7 +251,7 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
 
 void free(void *p, heap_t *heap) {
     // Exit for null pointer
-    if(p == NULL)
+    if(p == 0)
         return;
     
     // Retrieve the header and the footer for this pointer
