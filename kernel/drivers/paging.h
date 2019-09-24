@@ -34,5 +34,9 @@ void switch_page_directory(page_directory_t *new);
 page_t *get_page(uint32_t addr, int32_t make, page_directory_t *dir);
 // Handle page faults
 void page_fault(registers_t regs);
+// Allocate a new frame
+void alloc_frame(page_t *page, int32_t is_kernel, int32_t is_writeable);
+// Deallocate frame
+void free_frame(page_t *page);
 
 #endif

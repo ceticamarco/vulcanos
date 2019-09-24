@@ -4,13 +4,13 @@
 extern void panic(const char *message, const char *file, uint32_t line) {
     asm volatile("cli"); // Disable interrupts
 
-    kprint("PANIC(");
-    kprint(message);
-    kprint(") at ");
-    kprint(file);
-    kprint(":");
+    kprint((uint8_t*)"PANIC(");
+    kprint((uint8_t*)message);
+    kprint((uint8_t*)") at ");
+    kprint((uint8_t*)file);
+    kprint((uint8_t*)":");
     kprint_dec(line);
-    kprint("\n");
+    kprint((uint8_t*)"\n");
     // Now hang on for ever
     for(;;);
 }
@@ -19,13 +19,13 @@ extern void panic(const char *message, const char *file, uint32_t line) {
 extern void panic_assert(const char *file, uint32_t line, const char *desc) {
     asm volatile("cli"); // Disable interrupts
 
-    kprint("ASSERTION-FAILED(");
-    kprint(desc);
-    kprint(") at ");
-    kprint(file);
-    kprint(":");
+    kprint((uint8_t*)"ASSERTION-FAILED(");
+    kprint((uint8_t*)desc);
+    kprint((uint8_t*)") at ");
+    kprint((uint8_t*)file);
+    kprint((uint8_t*)":");
     kprint_dec(line);
-    kprint("\n");
+    kprint((uint8_t*)"\n");
     // Now hang on forever
     for(;;);
 }

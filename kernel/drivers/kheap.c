@@ -6,12 +6,12 @@ extern page_directory_t *kernel_directory;
 uint32_t placement_addr = (uint32_t)&end;
 heap_t *kheap = 0;
 
-uint32_t kmalloc_init(uint32_t sz, int32_t align, uint32_t *phys) {
+uint32_t kmalloc_int(uint32_t sz, int32_t align, uint32_t *phys) {
     if(kheap != 0) {
-        void *addr = alloc(sz, (uint8_t)align, &kheap);
+        void *addr = alloc(sz, (uint8_t)align, kheap);
         if(phys != 0) {
             page_t *page = get_page((uint32_t)addr, 0, kernel_directory);
-            *phys = page->frame*0x1000 + (uint32_t)addr&0xFFF;
+            *phys = (page->frame*0x1000 + (uint32_t)addr)&0xFFF;
         }
         return (uint32_t)addr;
     } else {
@@ -58,7 +58,7 @@ static int32_t find_smallest_hole(uint32_t size, uint8_t page_align, heap_t *hea
         if(page_align > 0) {
             uint32_t loc = (uint32_t)header;
             int32_t offset = 0;
-            if((loc+sizeof(header_t)) & 0xFFFFF000 != 0) // Page aligned memory
+            if(((loc+sizeof(header_t)) & 0xFFFFF000) != 0) // Page aligned memory
                 offset = 0x1000 - (loc+sizeof(header_t))%0x1000;
             int32_t hole_size = (int32_t)header->size - offset;
             if(hole_size >= (int32_t)size)
@@ -91,7 +91,7 @@ heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervis
     start += sizeof(type_t)*HEAP_INDEX_SIZE;
 
     // Check if start address is page-aligned
-    if(start & 0xFFFFF000 != 0) {
+    if((start & 0xFFFFF000) != 0) {
         start &= 0xFFFFF000;
         start += 0x1000;
     }
@@ -116,7 +116,7 @@ heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervis
 static void expand(uint32_t new_size, heap_t *heap) {
     // Before anything else let's check that new size is greater than older one
     ASSERT(new_size > heap->end_address - heap->start_address);
-    if(new_size&0xFFFFF000 != 0) {
+    if((new_size&0xFFFFF000) != 0) {
         new_size &= 0xFFFFF000;
         new_size += 0x1000;
     }
@@ -166,9 +166,9 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
         uint32_t new_len = heap->end_address-heap->start_address;
 
         i = 0; // Endmost header in location
-        uint32_t idx = -1; // Endmost header's index
+        int32_t idx = -1; // Endmost header's index
         uint32_t value = 0x0; // Endmost header's value
-        while(i < heap->index.size) {
+        while((uint32_t)i < heap->index.size) {
             uint32_t tmp = (uint32_t)lookup_ordered_list(i, &heap->index);
             if(tmp > value) {
                 value = tmp;
@@ -187,7 +187,7 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
             foot->header = head;
             insert_ordered_list((void*)head, &heap->index);
         } else {
-            header_t *head = lookup_ordered_list(idx, &heap->index);
+            header_t *head = lookup_ordered_list((uint32_t)idx, &heap->index);
             head->size += new_len - old_len;
             // Rewrite the footer
             footer_t *foot = (footer_t*) ((uint32_t)head + head->size - sizeof(footer_t));

@@ -5,10 +5,12 @@
  *       Released under GPLv3         *
  * https://github.com/ice-bit/iceOS   *
  ***************************************/
-#ifndef ORDERED_LIST
-#define ORDERED_LIST
+#ifndef ORDERED_LIST_H
+#define ORDERED_LIST_H
 
 #include <stdint.h>
+#include "kheap.h"
+#include "../cpu/assert.h"
 #include "../libc/string.h"
 
 /* Our list is always in a 'sorted state',
