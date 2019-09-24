@@ -8,8 +8,7 @@
 
 
 /*** Heap implementation from James Molloy's tutorial:
- * http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html ***/
-
+  http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html ***/
 
 
 /* This heap algorithm uses two different data structures: blocks and holes.
