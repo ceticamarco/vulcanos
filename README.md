@@ -1,7 +1,7 @@
 <div align="center">
 <img src="imgs/iceOS_logo_full_concept.png" width="350px">
 <br><br>
-<a href="https://git.marcocetica.com/icebit/iceos/commits/master"><img alt="pipeline status" src="https://git.marcocetica.com/icebit/iceos/badges/master/pipeline.svg" /></a>
+<a href="https://travis-ci.org/ice-bit/iceOS"><img src="https://travis-ci.org/ice-bit/iceOS.svg?branch=master" alt="Build Status" /></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue"></a>
 <img src="https://img.shields.io/github/repo-size/ice-bit/iceOS?color=purple" />
 <img src="https://img.shields.io/badge/platform-intel--x86-brown" />
