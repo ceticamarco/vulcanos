@@ -1,0 +1,9 @@
+language: C
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y nasm grub-pc-bin
+  - alias i686-elf-gcc="gcc"
+  - alias i686-elf-ld="ld"
+
+script: make clean all
