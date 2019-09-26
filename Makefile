@@ -1,7 +1,7 @@
 LD = i686-elf-ld
 LFLAGS = -melf_i386 -nostdlib -O2 -T link.ld 
 
-all: prepare cpu kernel_code drivers libc shell link iso
+all: prepare cpu kernel_code drivers libc shell mem link iso
 
 prepare:
 	mkdir -p obj/
@@ -27,6 +27,10 @@ libc:
 shell:
 	make -C kernel/shell
 	cp kernel/shell/*.o obj/
+
+mem:
+	make -C kernel/mem
+	cp kernel/mem/*.o obj/
 
 link:
 	$(LD) $(LFLAGS) -o isodir/boot/iceOS.bin obj/*.o
