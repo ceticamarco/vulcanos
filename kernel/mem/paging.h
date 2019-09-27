@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "../drivers/isr.h"
+#include "kheap.h"
 
 #define FRAME_SIZE 4096
 #define PAGE_TABLE_SIZE 1024

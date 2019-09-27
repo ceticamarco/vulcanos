@@ -2,16 +2,10 @@
 #include "../libc/string.h"
 #include "../libc/assert.h"
 #include "../drivers/tty.h"
-// #include "kheap.h" FIXME:
 
 // External definitions from kheap.c
 extern uint32_t placement_addr;
 extern heap_t *kheap;
-
-void map_heap_pages();
-void setup_frame_allocations();
-void setup_page_directory();
-void alloc_heap_pages();
 
 // Bitset of frames, used or free
 uint32_t *frame_allocations;
@@ -55,7 +49,7 @@ void alloc_frame(page_t *page, int32_t is_super, int32_t is_write) {
             page->pr = PAGE_PRESENT;
             page->rw = (is_write) ? PAGE_READ_WRITE : PAGE_READ_ONLY;
             page->us = (is_super) ? PAGE_SUPERVISOR : PAGE_USER;
-            page->fr = free_frame;
+            page->fr = fframe;
             // Set new frames as used
             uint32_t physical_addr = fframe * FRAME_SIZE;
             set_frame(physical_addr);
@@ -74,11 +68,22 @@ void free_frame(page_t *page) {
 }
 
 void init_paging() {
-    setup_frame_allocations();
-    setup_page_directory();
-    map_heap_pages();
-    identity_map();
-    alloc_heap_pages();
+    kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
+    memset(kernel_directory, 0, sizeof(page_directory_t));
+    current_directory = kernel_directory;
+
+    kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
+    memset(kernel_directory, 0, sizeof(page_directory_t));
+    current_directory = kernel_directory;
+
+    for(uint32_t i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += FRAME_SIZE)
+        get_page(i, 1, kernel_directory);
+
+    for(uint32_t i  = 0; i < placement_addr + FRAME_SIZE; i += FRAME_SIZE)
+        alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
+    
+    for(uint32_t i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += FRAME_SIZE)
+        alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 
     // Register a new ISR to listen to IRQ 14
     register_interrupt_handler(14, page_fault);
@@ -86,38 +91,11 @@ void init_paging() {
     kheap = create_heap(KHEAP_START, KHEAP_START+KHEAP_INITIAL_SIZE, 0xCFFFF000, 0, 0);
 }
 
-void map_heap_pages() {
-    for(uint32_t i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i != FRAME_SIZE)
-        get_page(i, 1, kernel_directory);
-}
-
-void setup_frame_allocations() {
-    nframes = PHYSICAL_MEM_SIZE / FRAME_SIZE;
-    frame_allocations = (uint32_t*)kmalloc(nframes / FRAME_ALLOCATIONS_SECTION_SIZE);
-    memset(frame_allocations, 0, nframes/FRAME_ALLOCATIONS_SECTION_SIZE);
-}
-
-void setup_page_directory() {
-    kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
-    memset(kernel_directory, 0, sizeof(page_directory_t));
-    current_directory = kernel_directory;
-}
-
-void alloc_heap_pages() {
-    for(uint32_t i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += FRAME_SIZE)
-        alloca_frame(get_page(i, 1, kernel_directory), 0, 0);
-}
-
-void identity_map() {
-    for(uint32_t i  = 0; i < placement_addr + FRAME_SIZE; i += FRAME_SIZE)
-        alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
-}
-
 void enable_paging(page_directory_t *dir) {
     current_directory = dir;
     asm volatile("mov %0, %%cr3" :: "r"(&dir->page_tables_physical));
     uint32_t cr0;
-    asm volatile("mov %%cr0, %d" : "=r"(cr0));
+    asm volatile("mov %%cr0, %0" : "=r"(cr0));
     cr0 |= 0x80000000; // Correct code to enable paging
     asm volatile("mov %0, %%cr0" :: "r"(cr0));
 }
@@ -129,7 +107,7 @@ page_t *get_page(uint32_t address, int32_t make, page_directory_t *dir) {
         return &dir->page_tables_virtual[table_idx]->pages[address%1024];
     else if(make) {
         uint32_t tmp;
-        dir->page_tables_virtual[table_idx] = (page_table_t*)kmalloc_sp(sizeof(page_table_t), &tmp);
+        dir->page_tables_virtual[table_idx] = (page_table_t*)kmalloc_ap(sizeof(page_table_t), &tmp);
         memset(dir->page_tables_virtual[table_idx], 0, 0x1000);
         dir->page_tables_physical[table_idx] = tmp | 0x7;
         return &dir->page_tables_virtual[table_idx]->pages[address%1024];

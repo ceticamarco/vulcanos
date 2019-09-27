@@ -61,13 +61,11 @@ heap_t *create_heap(uint32_t start, uint32_t end, uint32_t max, uint8_t supervis
 void *alloc(uint32_t size, uint8_t page_align, heap_t *heap);
 // Free a block allocated with alloc
 void free(void *p, heap_t *heap);
-uint32_t kmalloc_int(uint32_t sz, int align, uint32_t *phys);
+uint32_t kmalloc_int(uint32_t sz, int32_t align, uint32_t *phys);
 uint32_t kmalloc_a(uint32_t sz);
 uint32_t kmalloc_p(uint32_t sz, uint32_t *phys);
 uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys);
 uint32_t kmalloc(uint32_t sz);
 void kfree(void *p);
-
-
 
 #endif
