@@ -13,7 +13,7 @@
 
 # About iceOS
 <div align="center">
-<img src="imgs/qemu_screenshot.png"  />
+<img src="imgs/screenshot.png"  />
 <h6><i>iceOS running under QEMU</h6></i>
 </div><br /><br />
 
