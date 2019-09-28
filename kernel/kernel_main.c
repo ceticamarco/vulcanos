@@ -15,6 +15,7 @@
 #include "shell/shell.h"
 #include "libc/stdio.h"
 #include "libc/multiboot.h"
+#include "libc/assert.h"
 
 #include <stdint.h>
 
@@ -38,23 +39,23 @@ void kernel_main() {
     printf_color("\n[INFO]", LIGHT_CYAN, BLACK);
     printf_color("   - Loaded PS/2 driver", WHITE, BLACK);
 
-    init_paging();
+    init_paging(); // Initialize paging
     printf_color("\n[INFO]", LIGHT_CYAN, BLACK);
     printf_color("   - Loaded Paging", WHITE, BLACK);
-
     
-    /* printf_color("\n[TEST]", LIGHT_BROWN, BLACK); // Testing heap
-    printf_color("   - Allocating heap blocks..\n", LIGHT_BROWN, BLACK);
-
-    uint32_t x = kmalloc(8), y = kmalloc(16), z = kmalloc(32);
-    printf("x: %x, y: %x, z: %x", x, y, z);
-
     printf_color("\n[TEST]", LIGHT_BROWN, BLACK); // Testing heap
-    printf_color("   - Freeing heap blocks..\n", LIGHT_BROWN, BLACK);
-    kfree((void*)x), kfree((void*)y), kfree((void*)z);
+    printf_color("   - Testing heap..\n", LIGHT_BROWN, BLACK);
 
-    printf_color("\n[STATUS]", LIGHT_GREEN, BLACK);
-    printf_color(" - Heap worked successfullt!", WHITE, BLACK); */
+    uint32_t x = kmalloc(32), y = kmalloc(32);
+    printf("x: %x, y: %x", x, y);
+    kfree((void*)y);
+    uint32_t z = kmalloc(8);
+    printf(", z: %x\n", z); // If z is equal to y, heap's anti-fragmentation algorithm works
+    ASSERT(z == y);
+    kfree((void*)z), kfree((void*)x);
+
+    printf_color("[STATUS]", LIGHT_GREEN, BLACK);
+    printf_color(" - Heap works!", WHITE, BLACK);
     
     iceos_ascii_logo();
     init_prompt(); // Initialize frame buffer

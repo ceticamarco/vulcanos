@@ -119,20 +119,11 @@ void processCommand(uint8_t *cmd) {
 }
 
 void iceos_ascii_logo() {
-printf_color(
-    "\n\n"
-    " MMMMMMMMMMMMMMMMMMMMM  MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
-    " MMMMMMMMMMMM...?MMM.. MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
-    " MMMMMMMMM ........M .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
-    " MMMMMMMM...........M .MMMMMMMM..MMO ........MMM....MM..MMMMM\n"
-    " MMMMM ..............M..MMMMMMM..M...........M.....,.M.. MMMM\n"
-    " MMMM................MM,.. .MMM....MMMM......M..MMMM..M,..MMM\n"
-    " MMM ................... MMMMMM....MMMM......M..MMMM..MMN..MM\n"
-    " M ......................,MMMMM..M.. ........M.......M... .~M\n"
-    " ........................MMMMM..MMM.........MMM...MMM....MMMM\n"
-    " .........................MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
-    " M .....................DMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n"
-    " MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n",
+    printf_color("\n\n"
+    "##############################################\n#",
+    LIGHT_BLUE, BLACK);
+    printf_color(" iceOS - developed by Marco Cetica (c) 2019 ",
     LIGHT_MAGENTA, BLACK);
-    printf_color("                     (c) Marco Cetica 2019\n", LIGHT_GREEN, BLACK);
- }
+    printf_color("#\n##############################################\n",
+    LIGHT_BLUE, BLACK);
+}

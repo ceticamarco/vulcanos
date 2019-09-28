@@ -1,7 +1,6 @@
 #include "kheap.h"
 #include "paging.h"
-
-// TODO: add assert
+#include "../libc/assert.h"
 
 extern uint32_t end;
 uint32_t placement_addr = (uint32_t)&end;
@@ -50,13 +49,18 @@ uint32_t kmalloc(uint32_t sz) {
 }
 
 static void expand(uint32_t new_size, heap_t *heap) {
+    // First check if new size is greater than older one
+    ASSERT(new_size > heap->end_address - heap->start_address);
+
     // Get nearest page boundary
     if((new_size&0xFFFFF000) != 0) {
         new_size &= 0xFFFFF000;
         new_size += 0x1000;
     }
+    // Check if new size is not greater than maximum size
+    ASSERT(heap->start_address+new_size <= heap->max_address);
 
-    uint32_t old_size = heap->end_adddress - heap->start_address;
+    uint32_t old_size = heap->end_address - heap->start_address;
 
     uint32_t it = old_size;
     while(it < new_size) {
@@ -64,10 +68,12 @@ static void expand(uint32_t new_size, heap_t *heap) {
         (heap->supervisor) ? 1 : 0, (heap->readonly) ? 0 : 1);
         it += 0x1000; // Page size
     }
-    heap->end_adddress = heap->start_address+new_size;
+    heap->end_address = heap->start_address+new_size;
 }
 
 static uint32_t contract(uint32_t new_size, heap_t *heap) {
+    ASSERT(new_size < heap->end_address-heap->start_address);
+
     if(new_size&0x1000) {
         new_size &= 0x1000;
         new_size += 0x1000;
@@ -76,14 +82,14 @@ static uint32_t contract(uint32_t new_size, heap_t *heap) {
     if(new_size < HEAP_MIN_SIZE)
         new_size = HEAP_MIN_SIZE;
     
-    uint32_t old_size = heap->end_adddress - heap->start_address;
+    uint32_t old_size = heap->end_address - heap->start_address;
     uint32_t it = old_size - 0x1000;
     while(new_size < it) {
-        free_frame(get_page(heap->start_address+it,0, kernel_directory));
+        free_frame(get_page(heap->start_address+it, 0, kernel_directory));
         it -= 0x1000;
     }
 
-    heap->end_adddress = heap->start_address + new_size;
+    heap->end_address = heap->start_address + new_size;
     return new_size;
 }
 
@@ -94,10 +100,10 @@ static uint32_t find_smallest_hole(uint32_t size, uint8_t page_align, heap_t *he
     while(it < heap->index.size) {
         header_t *head = (header_t*)lookup_ordered_array(it, &heap->index);
         if(page_align > 0) {
-            // IF page must be aligned
+            // page must be aligned?
             uint32_t location = (uint32_t)head;
             uint32_t offset = 0;
-            if((((location+sizeof(header_t)) & 0xFFFFF000) != 0))
+            if(((location+sizeof(header_t)) & 0xFFFFF000) != 0)
                 offset = 0x1000 - (location+sizeof(header_t))%0x1000;
             uint32_t hole_size = (uint32_t)head->size - offset;
             // Check if we can fit this page in that hole
@@ -122,8 +128,11 @@ static uint8_t header_t_less_than(void *a, void *b) {
 heap_t *create_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t supervisor, uint8_t readonly) {
     heap_t *heap = (heap_t*)kmalloc(sizeof(heap_t));
 
+    ASSERT(start%0x1000 == 0);
+    ASSERT(end_addr%0x1000 == 0);
+
     // Initialize the index
-    heap->index = place_ordered_array((void*)start, HEAP_MIN_SIZE, &header_t_less_than);
+    heap->index = place_ordered_array((void*)start, HEAP_INDEX_SIZE, &header_t_less_than);
     // Shift start address to the right
     start += sizeof(type_t) * HEAP_INDEX_SIZE;
 
@@ -134,7 +143,7 @@ heap_t *create_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t sup
     }
     // Store vars into heap
     heap->start_address = start;
-    heap->end_adddress = end_addr;
+    heap->end_address = end_addr;
     heap->max_address = max;
     heap->supervisor = supervisor;
     heap->readonly = readonly;
@@ -154,12 +163,12 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
     uint32_t it = find_smallest_hole(new_size, page_align, heap);
 
     if((int32_t)it == -1) {
-        uint32_t old_len = heap->end_adddress - heap->start_address;
-        uint32_t old_end_addr = heap->end_adddress;
+        uint32_t old_len = heap->end_address - heap->start_address;
+        uint32_t old_end_addr = heap->end_address;
 
         // Allocate more space
         expand(old_len+new_size, heap);
-        uint32_t new_len = heap->end_adddress - heap->start_address;
+        uint32_t new_len = heap->end_address - heap->start_address;
 
         it = 0;
         uint32_t idx = -1; uint32_t value = 0x0;
@@ -237,7 +246,7 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
         hole_head->is_hole = 1;
         hole_head->size = origin_hole_s - new_size;
         footer_t *hole_foot = (footer_t*)((uint32_t)hole_head + origin_hole_s - new_size - sizeof(footer_t));
-        if((uint32_t)hole_foot < heap->end_adddress) {
+        if((uint32_t)hole_foot < heap->end_address) {
             hole_foot->magic = HEAP_MAGIC;
             hole_foot->header = hole_head;
         }
@@ -258,7 +267,8 @@ void free(void *p, heap_t *heap) {
     header_t *head = (header_t*)((uint32_t)p - sizeof(header_t));
     footer_t *foot = (footer_t*)((uint32_t)head + head->size - sizeof(footer_t));
 
-    // TODO: assert
+    ASSERT(head->magic == HEAP_MAGIC);
+    ASSERT(foot->magic == HEAP_MAGIC);
 
     head->is_hole = 1; // Make this a hole
     int8_t add_to_free_hole = 1; // Add this header to free holes
@@ -284,15 +294,16 @@ void free(void *p, heap_t *heap) {
     while((it < heap->index.size) && (lookup_ordered_array(it, &heap->index) != (void*)test_head))
         it++;
     
-    // TODO: ASSERTION
     // Check if we actually found something
+    ASSERT(it < heap->index.size);
+
     // Remove that item
     remove_ordered_array(it, &heap->index);
     }
 
     // If footer is located at the end, we can contract the heap
-    if((uint32_t)foot+sizeof(footer_t) == heap->end_adddress) {
-        uint32_t old_len = heap->end_adddress-heap->start_address;
+    if((uint32_t)foot+sizeof(footer_t) == heap->end_address) {
+        uint32_t old_len = heap->end_address-heap->start_address;
         uint32_t new_len = contract((uint32_t)head - heap->start_address, heap);
         // Check dimensions after resizing
         if(head->size - (old_len-new_len) > 0) {

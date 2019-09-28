@@ -35,7 +35,7 @@ Then you can run those commands:
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
 
 Otherwise you can download an already compiled ISO file 
-[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `ab3d5b8307015461b44e62d0c2d42806`)
+[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `342691301699a73102fa6a57abea6989`)
 
 ## Features
 iceOS already have/will have the following features:  
@@ -44,6 +44,8 @@ iceOS already have/will have the following features:
 - [x] Interrupts implementation;
 - [x] PIC & PIT implementation;
 - [x] PS/2 driver;
+- [x] Heap implementation;
+- [ ] Virtual File System
 - [x] Support for x86 architecture;
 - [x] GRUB as bootloader;
 
@@ -54,6 +56,7 @@ This project is made with different kind of resources and different kind of know
 - [Operating System Concepts - Silberschatz (2016)](https://www.amazon.it/Sistemi-operativi-Concetti-ed-esempi/dp/8865183713/ref=pd_lpo_sbs_14_img_1?_encoding=UTF8&psc=1&refRID=4A5T2C7KKH7RA0K1T7RV)
 - [The Art Of Electronics - Horowitz (2015)](https://www.amazon.it/gp/product/0521809266/ref=ppx_od_dt_b_asin_title_s00?ie=UTF8&psc=1)
 - [OSDev wiki](https://wiki.osdev.org/Main_Page)
+- [JamesM's kernel development tutorials](http://www.jamesmolloy.co.uk/tutorial_html/1.-Environment%20setup.html)
 - [The Little Book About OS Development](https://littleosbook.github.io/)
 - [I actually started this project due to skiftOS](https://github.com/skiftOS/skift)
 ## License
