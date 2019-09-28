@@ -140,7 +140,7 @@ heap_t *create_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t sup
     heap->readonly = readonly;
 
     header_t *hole = (header_t*)start;
-    hole->size = end - start;
+    hole->size = end_addr - start;
     hole->magic = HEAP_MAGIC;
     hole->is_hole = 1;
     insert_ordered_array((void*)hole, &heap->index);
@@ -194,4 +194,125 @@ void *alloc(uint32_t size, uint8_t page_align, heap_t *heap) {
         // Now we have enough space, so recall this function again
         return alloc(size, page_align, heap);
     }
+
+    header_t *origin_hole_head = (header_t*)lookup_ordered_array(it, &heap->index);
+    uint32_t origin_hole_p = (uint32_t)origin_hole_head;
+    uint32_t origin_hole_s = origin_hole_head->size;
+    // Check if we should split the hole into two parts
+    if(origin_hole_s-new_size < sizeof(header_t)+sizeof(footer_t)) {
+        // Increase the requested size to the size of the hole we found
+        size += origin_hole_s-new_size;
+        new_size = origin_hole_s;
+    }
+    
+    // Check if we need to page-align data
+    if(page_align && origin_hole_p&0xFFFFF000) {
+        uint32_t new_loc = origin_hole_p + 0x1000 - (origin_hole_p&0xFFF) - sizeof(header_t);
+        header_t *hole_header = (header_t*)origin_hole_p;
+        hole_header->size = 0x1000 - (origin_hole_p&0xFFF) - sizeof(header_t);
+        hole_header->magic = HEAP_MAGIC;
+        hole_header->is_hole = 1;
+        footer_t *hole_footer = (footer_t*)((uint32_t)new_loc - sizeof(header_t));
+        hole_footer->magic = HEAP_MAGIC;
+        hole_footer->header = hole_header;
+        origin_hole_p = new_loc;
+        origin_hole_s = origin_hole_s - hole_header->size;
+    } else
+        remove_ordered_array(it, &heap->index); // Remove hole, since we don't need it anymore
+
+    // Rewrite original header
+    header_t *block_head = (header_t*)origin_hole_p;
+    block_head->magic = HEAP_MAGIC;
+    block_head->is_hole = 0;
+    block_head->size = new_size;
+    // and the footer
+    footer_t *block_foot = (footer_t*)(origin_hole_p + sizeof(header_t) + size);
+    block_foot->magic = HEAP_MAGIC;
+    block_foot->header = block_head;
+
+    // Check if we need to write a new hole after the allocated block
+    if(origin_hole_s - new_size > 0) {
+        header_t *hole_head = (header_t*)(origin_hole_p + sizeof(header_t) + size + sizeof(footer_t));
+        hole_head->magic = HEAP_MAGIC;
+        hole_head->is_hole = 1;
+        hole_head->size = origin_hole_s - new_size;
+        footer_t *hole_foot = (footer_t*)((uint32_t)hole_head + origin_hole_s - new_size - sizeof(footer_t));
+        if((uint32_t)hole_foot < heap->end_adddress) {
+            hole_foot->magic = HEAP_MAGIC;
+            hole_foot->header = hole_head;
+        }
+        // Add new hole to the data structure
+        insert_ordered_array((void*)hole_head, &heap->index);
+    }
+
+    // Return the block header
+    return (void*)((uint32_t)block_head+sizeof(header_t));
+}
+
+void free(void *p, heap_t *heap) {
+    // Check null pointers
+    if(p == 0)
+        return;
+
+    // Retrieve data
+    header_t *head = (header_t*)((uint32_t)p - sizeof(header_t));
+    footer_t *foot = (footer_t*)((uint32_t)head + head->size - sizeof(footer_t));
+
+    // TODO: assert
+
+    head->is_hole = 1; // Make this a hole
+    int8_t add_to_free_hole = 1; // Add this header to free holes
+
+    // Left unify
+    footer_t *test_foot = (footer_t*)((uint32_t)head - sizeof(footer_t));
+    if(test_foot->magic == HEAP_MAGIC && test_foot->header->is_hole == 1 ) {
+        uint32_t cache_s = head->size; // Store current size
+        head = test_foot->header; // Rewrite header into new one
+        foot->header = head; // Point footer to the new header
+        head->size += cache_s; // Increase size
+        add_to_free_hole = 0; // Header already in the structure.
+    }
+
+    // Right unify
+    header_t *test_head = (header_t*)((uint32_t)foot + sizeof(footer_t));
+    if(test_head->magic == HEAP_MAGIC && test_head->is_hole) {
+        head->size += test_head->size; // Increase size
+        test_foot = (footer_t*)((uint32_t)test_foot + test_head->size - sizeof(footer_t));
+        foot = test_foot;
+    // Find and remove this header from the structure
+    uint32_t it = 0;
+    while((it < heap->index.size) && (lookup_ordered_array(it, &heap->index) != (void*)test_head))
+        it++;
+    
+    // TODO: ASSERTION
+    // Check if we actually found something
+    // Remove that item
+    remove_ordered_array(it, &heap->index);
+    }
+
+    // If footer is located at the end, we can contract the heap
+    if((uint32_t)foot+sizeof(footer_t) == heap->end_adddress) {
+        uint32_t old_len = heap->end_adddress-heap->start_address;
+        uint32_t new_len = contract((uint32_t)head - heap->start_address, heap);
+        // Check dimensions after resizing
+        if(head->size - (old_len-new_len) > 0) {
+            // Dimensions is still a positive value, so we can resize
+            head->size -= old_len-new_len;
+            foot = (footer_t*)((uint32_t)head + head->size - sizeof(footer_t));
+            foot->magic = HEAP_MAGIC;
+            foot->header = head;
+        } else {
+            // Remove block from the structure
+            uint32_t it = 0;
+            while((it < heap->index.size) && (lookup_ordered_array(it, &heap->index) != (void*)test_head))
+                it++;
+            // If we didn't find that block we haven't nothing to remove
+            if(it < heap->index.size)
+                remove_ordered_array(it, &heap->index);
+        }
+    }
+
+    // If required by the user, add that block to the structure
+    if(add_to_free_hole == 1)
+        insert_ordered_array((void*)head, &heap->index);
 }

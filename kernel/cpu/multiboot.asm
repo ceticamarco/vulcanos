@@ -16,5 +16,5 @@ head_s:
     ; Various flags
     dw 0 ; type
     dw 0 ; flags
-    dd 0 ; size
+    dd 8 ; size
 head_e:

@@ -50,7 +50,7 @@ typedef struct {
     ordered_array_t index;
     uint32_t start_address; // Begin of allocated space
     uint32_t end_adddress; // End of allocated space
-    uint32_t max_address; // Maximum size heap ca be expanded to
+    uint32_t max_address; // Maximum size heap can be expanded to
     uint8_t supervisor;
     uint8_t readonly;
 } heap_t;

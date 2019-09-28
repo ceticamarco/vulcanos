@@ -1,6 +1,7 @@
 #include "paging.h"
 #include "../libc/string.h"
 #include "../libc/assert.h"
+#include "../libc/stdio.h"
 #include "../drivers/tty.h"
 
 // External definitions from kheap.c
@@ -68,20 +69,25 @@ void free_frame(page_t *page) {
 }
 
 void init_paging() {
+    // Setup frame allocation
+    nframes = PHYSICAL_MEM_SIZE / FRAME_SIZE;
+    frame_allocations = (uint32_t*)kmalloc(nframes/FRAME_ALLOCATIONS_SECTION_SIZE);
+    memset(frame_allocations, 0, nframes/FRAME_ALLOCATIONS_SECTION_SIZE);
+
+    // Setup page directory
     kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
     memset(kernel_directory, 0, sizeof(page_directory_t));
     current_directory = kernel_directory;
 
-    kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
-    memset(kernel_directory, 0, sizeof(page_directory_t));
-    current_directory = kernel_directory;
-
+    // Map heap pages
     for(uint32_t i = KHEAP_START; i < KHEAP_START + KHEAP_INITIAL_SIZE; i += FRAME_SIZE)
         get_page(i, 1, kernel_directory);
 
+    // Setup identity map
     for(uint32_t i  = 0; i < placement_addr + FRAME_SIZE; i += FRAME_SIZE)
         alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
     
+    // Allocate heap pages
     for(uint32_t i = KHEAP_START; i < KHEAP_START+KHEAP_INITIAL_SIZE; i += FRAME_SIZE)
         alloc_frame(get_page(i, 1, kernel_directory), 0, 0);
 
@@ -121,17 +127,15 @@ void page_fault(registers_t regs) {
     asm volatile("mov %%cr2, %0" : "=r" (faulting_addr));
 
     // Gracefully print the error
-    kprint((uint8_t*)"Page fault! ( ");
+    kprint((uint8_t*)"\nPage fault! ( ");
     if(!(regs.err_code & 0x1))
-        kprint((uint8_t*)"Present");
+        kprint((uint8_t*)"Present ");
     if(regs.err_code & 0x2)
-        kprint((uint8_t*)"Read-Only");
+        kprint((uint8_t*)"Read-Only ");
     if(regs.err_code & 0x4)
-        kprint((uint8_t*)"User-Mode");
+        kprint((uint8_t*)"User-Mode ");
     if(regs.err_code & 0x8)
         kprint((uint8_t*)"Reserved");
-    kprint((uint8_t*)") at 0x");
-    kprint_hex(faulting_addr);
-    kprint((uint8_t*)"\n");
+    printf(") at %x\n", faulting_addr);
     PANIC("Page fault");
 }

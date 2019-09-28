@@ -10,8 +10,11 @@
 #include "drivers/idt.h"
 #include "drivers/timer.h"
 #include "drivers/keyboard.h"
+#include "mem/paging.h"
+#include "mem/kheap.h"
 #include "shell/shell.h"
 #include "libc/stdio.h"
+#include "libc/multiboot.h"
 
 #include <stdint.h>
 
@@ -34,6 +37,11 @@ void kernel_main() {
     init_keyboard(); // Initialize keyboard driver
     printf_color("\n[INFO]", LIGHT_CYAN, BLACK);
     printf_color("   - Loaded PS/2 driver", WHITE, BLACK);
+
+    init_paging();
+    printf_color("\n[INFO]", LIGHT_CYAN, BLACK);
+    printf_color("   - Loaded Paging", WHITE, BLACK);
+
     
     /* printf_color("\n[TEST]", LIGHT_BROWN, BLACK); // Testing heap
     printf_color("   - Allocating heap blocks..\n", LIGHT_BROWN, BLACK);

@@ -36,16 +36,16 @@ void destroy_ordered_array(ordered_array_t *array) {
 
 void insert_ordered_array(type_t item, ordered_array_t *array) {
     uint32_t it = 0;
-    while(it < array->size && array->less_than(array->array[it], it));
+    while(it < array->size && array->less_than(array->array[it], item))
         it++;
     if(it == array->size)
         array->array[array->size++] = item;
     else {
         type_t tmp = array->array[it];
-        array->array[it] = it;
+        array->array[it] = item;
         while(it < array->size) {
             it++;
-            type_t tmp = array->array[it];
+            type_t tmp2 = array->array[it];
             array->array[it] = tmp;
             tmp = tmp2;
         }

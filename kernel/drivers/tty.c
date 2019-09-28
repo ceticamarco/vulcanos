@@ -92,37 +92,6 @@ void kprint_dec(uint32_t num) {
     kprint(c2);
 }
 
-void kprint_hex(uint32_t num) {
-    int32_t tmp;
-    uint8_t no_zeros = 1;
-
-    kprint((uint8_t*)"0x");
-
-    for(int32_t i = 28; i > 0; i -= 4) {
-        tmp = (num >> i) & 0xF;
-        if(tmp == 0 && no_zeros != 0)
-            continue;
-        
-        if(tmp >= 0xA) {
-            no_zeros = 0;
-            uint8_t *buf = (uint8_t*)tmp-0xA+'a';
-            kprint_c(buf, strlen(buf), WHITE, BLACK);
-        } else {
-            uint8_t *buf = (uint8_t*)tmp+'a';
-            kprint_c(buf, strlen(buf), WHITE, BLACK);
-        }
-    }
-
-    tmp = num & 0xF;
-    if(tmp >= 0xA) {
-        uint8_t *buf = (uint8_t*)tmp-0xA+'a';
-        kprint_c(buf, strlen(buf), WHITE, BLACK);
-    } else {
-        uint8_t *buf = (uint8_t*)tmp+'a';
-        kprint_c(buf, strlen(buf), WHITE, BLACK);
-    }
-}
-
 void init_prompt() {
     uint8_t *prompt = (uint8_t*)"\nring0@iceOS-$ ";
     kprint_c(prompt, strlen(prompt), LIGHT_RED, BLACK);
