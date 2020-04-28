@@ -30,7 +30,7 @@ Before generating an ISO you have to compile a [cross compiler](https://wiki.osd
 - grub
 - mtools(if you are on Arch Linux)
 
-Then you can run those commands:
+Then you can run these commands:
 1. Type `make all` to compile the system and to create an ISO
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
 
@@ -58,6 +58,6 @@ This project is made with different kind of resources and different kind of know
 - [OSDev wiki](https://wiki.osdev.org/Main_Page)
 - [JamesM's kernel development tutorials](http://www.jamesmolloy.co.uk/tutorial_html/1.-Environment%20setup.html)
 - [The Little Book About OS Development](https://littleosbook.github.io/)
-- [I actually started this project due to skiftOS](https://github.com/skiftOS/skift)
+- [I actually started this project thanks to skiftOS](https://github.com/skiftOS/skift)
 ## License
 iceOS is released under GPLv3, you can obtain a copy of this license by cloning the repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.
