@@ -6,7 +6,6 @@
 
 // Start tick at zero
 uint32_t tick = 0;
-
 static void timer_callback(registers_t regs) {
     tick++;
     /* uint8_t buf[8];
