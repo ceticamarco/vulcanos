@@ -44,7 +44,8 @@ iceOS has the following features:
 - [x] PS/2 driver  
 - [x] Heap  
 - [x] Paging
-- [ ] VFS driver
+- [ ] VFS driver  
+- [ ] Usermode
 
 ## Tutorial
 I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](https://osdev.marcocetica.com).
