@@ -47,7 +47,7 @@ iceOS has the following features:
 - [ ] VFS driver
 
 ## Tutorial
-I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](osdev.marcocetica.com).
+I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](https://osdev.marcocetica.com).
 
 
 ## License
