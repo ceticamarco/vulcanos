@@ -14,7 +14,6 @@
 #include "mem/kheap.h"
 #include "shell/shell.h"
 #include "libc/stdio.h"
-#include "libc/multiboot.h"
 #include "libc/assert.h"
 
 #include <stdint.h>

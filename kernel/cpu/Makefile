@@ -1,4 +1,4 @@
-OBJS = multiboot.asm.o kernel_loader.asm.o ports.asm.o  \
+OBJS =  kernel_loader.asm.o ports.asm.o  \
 		gdt.asm.o idt.asm.o interrupts.asm.o
 
 ASM = nasm
