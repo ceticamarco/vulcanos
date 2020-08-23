@@ -22,7 +22,7 @@ void move_cursor(uint16_t pos) {
     outb(VGA_DATA_PORT, pos & 0x00FF);
 }
 
-void cursor_adv() {
+void cursor_adv() { // TODO: specify number of adv. with a parameter
     if(fb_col < VGA_WIDTH - 1)
         fb_col++;
     else
@@ -57,6 +57,8 @@ void kprint_c(uint8_t *buf, uint32_t len, uint8_t fg, uint8_t bg) {
         uint8_t c = buf[i];
         if(c == '\n' || c == '\r')
             newline();
+        else if(c == '\t')
+            tab();
          else {
             pos = fb_col + (fb_row * VGA_WIDTH);
             write_cell(pos, (uint8_t)c, fg, bg);
@@ -125,4 +127,9 @@ void newline() {
 
     fb_col = 1;
     move_cursor(fb_col + (fb_row * VGA_WIDTH));
+}
+
+void tab() {
+    for(uint8_t i = 0; i < 4; i++)
+        cursor_adv(); // Increment cursor 4 times
 }

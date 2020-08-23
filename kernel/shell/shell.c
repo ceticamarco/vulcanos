@@ -120,10 +120,10 @@ void processCommand(uint8_t *cmd) {
 
 void iceos_ascii_logo() {
     printf_color("\n\n"
-    "##############################################\n#",
+    "###################################################\n#",
     LIGHT_BLUE, BLACK);
-    printf_color(" iceOS - developed by Marco Cetica (c) 2019 ",
+    printf_color(" iceOS - developed by Marco Cetica (c) 2019-2020 ",
     LIGHT_MAGENTA, BLACK);
-    printf_color("#\n##############################################\n",
+    printf_color("#\n###################################################\n",
     LIGHT_BLUE, BLACK);
 }

@@ -34,7 +34,7 @@ After that, you can build iceOS just by running the command listed below.
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
 
 You can also find a ISO file 
-[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `342691301699a73102fa6a57abea6989`)
+[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `5a969460e63eb5c4dcfa943dc2a3f39f`)
 
 ## Features
 iceOS has the following features:  
@@ -48,7 +48,7 @@ iceOS has the following features:
 - [ ] Usermode
 
 ## Tutorial
-I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](https://osdev.marcocetica.com).
+I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](https://marcocetica.com/bl).
 
 
 ## License

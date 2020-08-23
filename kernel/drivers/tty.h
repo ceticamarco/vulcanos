@@ -46,7 +46,8 @@ enum TTY_COLORS {
 #define VGA_HIGH_BYTE 14
 #define VGA_LOW_BYTE 15
 
-/* Kernel's VGA API */
+/* Kernel's VGA API */ 
+// FIXME: Set these functions to static
 void write_cell(int16_t i, uint8_t c, uint8_t fg, uint8_t bg);
 void move_cursor(uint16_t pos);
 void cursor_adv();
@@ -59,5 +60,6 @@ void clear_prompt();
 void clear_row(uint8_t row);
 void scroll(); // Scroll one row
 void newline();
+void tab();
 
 #endif
