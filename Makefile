@@ -40,7 +40,7 @@ iso:
 
 clean:
 	rm -rf obj/ kernel/*.o kernel/cpu/*.o
-	rm -rf kernel/shell/*.o
+	rm -rf kernel/shell/*.o kernel/mem/*.o
 	rm -rf kernel/drivers/*.o kernel/libc/*.o
 	rm -rf iceOS.iso bochslog.txt commands isodir
 
@@ -49,6 +49,9 @@ bochs:
 
 run:
 	qemu-system-x86_64 -cdrom iceOS.iso
+	
+run-debug:
+	qemu-system-x86_64 -cdrom iceOS.iso -d exec,cpu
 
 run-curses:
 	qemu-system-x86_64 -cdrom iceOS.iso -curses
