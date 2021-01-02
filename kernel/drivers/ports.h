@@ -1,3 +1,10 @@
+/**************************************
+ *          VulcanOS Kernel           *
+ * Developed by Marco 'icebit' Cetica * 
+ *            (c) 2019-2021           *
+ *       Released under GPLv3         *
+ * https://github.com/ice-bit/iceOS   *
+ ***************************************/
 #ifndef _PORTS_H
 #define _PORTS_H
 

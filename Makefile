@@ -1,7 +1,7 @@
 LD = i686-elf-ld
 LFLAGS = -melf_i386 -nostdlib -O2 -T link.ld 
 
-all: prepare cpu kernel_code drivers libc shell mem link iso
+all: prepare cpu kernel_code drivers libc userspace mem link iso
 
 prepare:
 	mkdir -p obj/
@@ -24,9 +24,9 @@ libc:
 	make -C kernel/libc
 	cp kernel/libc/*.o obj/
 
-shell:
-	make -C kernel/shell
-	cp kernel/shell/*.o obj/
+userspace:
+	make -C kernel/userspace
+	cp kernel/userspace/*.o obj/
 
 mem:
 	make -C kernel/mem

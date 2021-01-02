@@ -1,7 +1,7 @@
 /**************************************
- *          iceOS Kernel              *
+ *          VulcanOS Kernel           *
  * Developed by Marco 'icebit' Cetica * 
- *            (c) 2019                *
+ *            (c) 2019-2021           *
  *       Released under GPLv3         *
  * https://github.com/ice-bit/iceOS   *
  ***************************************/
@@ -12,7 +12,7 @@
 #include "drivers/keyboard.h"
 #include "mem/paging.h"
 #include "mem/kheap.h"
-#include "shell/shell.h"
+#include "userspace/shell.h"
 #include "libc/stdio.h"
 #include "libc/assert.h"
 

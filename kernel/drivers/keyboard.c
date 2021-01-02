@@ -17,7 +17,7 @@
 #include "isr.h"
 #include "ports.h"
 #include "tty.h"
-#include "../shell/shell.h"
+#include "../userspace/shell.h"
 #include "../libc/stdio.h"
 
 static void keyboard_callback();
