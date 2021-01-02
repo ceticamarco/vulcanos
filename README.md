@@ -1,6 +1,6 @@
-<img src="imgs/logo.png" height="120" width="120" />
-# VulcanOS
-
+<img src="imgs/logo.png" align="left" width="120" height="120" />
+     
+# VulcanOS  
 **VulcanOS** is a x86 monolithic kernel written in C from scratch following the UNIX philosophy. This project is just a student learning tool to know more about operating systems, do not expect nothing more than a toy.
 
 
