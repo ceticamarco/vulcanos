@@ -1,23 +1,7 @@
-<div align="center">
-<img src="imgs/iceOS_logo_full_concept.png" width="350px">
-<br><br>
-<a href="https://travis-ci.org/ice-bit/iceOS"><img src="https://travis-ci.org/ice-bit/iceOS.svg?branch=master" alt="Build Status" /></a>
-<a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPLv3-blue"></a>
-<img src="https://img.shields.io/github/repo-size/ice-bit/iceOS?color=purple" />
-<img src="https://img.shields.io/badge/platform-intel--x86-brown" />
-<img src="https://img.shields.io/badge/language-C-black" />  
+<img src="imgs/logo.png" height="120" width="120" />
+# VulcanOS
 
-
-<h6><i>Simple kernel written in C for Intel x86 CPUs</i></h6>
-</div>
-
-# About iceOS
-<div align="center">
-<img src="imgs/screenshot.png"  />
-<h6><i>iceOS running under QEMU</h6></i>
-</div><br /><br />
-
-**iceOS** is a x86 monolithic kernel written in C from scratch following the UNIX philosophy. This project is just a student learning tool to know more about operating systems, do not expect nothing more than a toy.
+**VulcanOS** is a x86 monolithic kernel written in C from scratch following the UNIX philosophy. This project is just a student learning tool to know more about operating systems, do not expect nothing more than a toy.
 
 
 ## Installation
@@ -34,7 +18,7 @@ After that, you can build iceOS just by running the command listed below.
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
 
 You can also find a ISO file 
-[here](https://github.com/ice-bit/iceOS/raw/master/imgs/iceOS.iso)(md5sum: `5a969460e63eb5c4dcfa943dc2a3f39f`)
+[here](https://github.com/ice-bit/vulcanos/raw/master/imgs/vulcanos.iso)(md5sum: `5a969460e63eb5c4dcfa943dc2a3f39f`)
 
 ## Features
 iceOS has the following features:  
@@ -47,9 +31,6 @@ iceOS has the following features:
 - [ ] VFS driver  
 - [ ] Usermode
 
-## Tutorial
-I'm also writing a tutorial about this project. If you are interested about OS development and you're looking for a detailed _step-by-step_ tutorial, have a look at my [website](https://marcocetica.com/bl).
-
 
 ## License
-iceOS is released under GPLv3, you can obtain a copy of this license by cloning this repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.
+VulcanOS is released under GPLv3, you can obtain a copy of this license by cloning this repository or by visiting [this](https://opensource.org/licenses/GPL-3.0) page.
