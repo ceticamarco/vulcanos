@@ -88,6 +88,13 @@ size_t strlen(const uint8_t *buf) {
     return i;
 }
 
+uint8_t *strcpy(uint8_t *dst, const uint8_t *src) {
+    uint8_t *dst_p = dst;
+    while((*dst++ = *src++));
+
+    return dst_p;
+}
+
 /* Worst memset implementation
  * i could find on the net.
  * however it works so... */

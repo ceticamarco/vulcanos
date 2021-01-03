@@ -58,6 +58,5 @@ void kernel_main() {
     PRTOK
     printf("   - Heap works!");
     
-    iceos_ascii_logo();
     init_prompt(); // Initialize frame buffer
 }

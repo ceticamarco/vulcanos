@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "fetch.h"
 #include "../libc/string.h"
 #include "../libc/stdio.h"
 #include "../drivers/tty.h"
@@ -110,20 +111,10 @@ void processCommand(uint8_t *cmd) {
         register_dump();
     else if(strcmp(cmd, (uint8_t*)"timer") == 0)
         timer_dump();
-    else if(strcmp(cmd, (uint8_t*)"banner") == 0)
-        iceos_ascii_logo();
+    else if(strcmp(cmd, (uint8_t*)"fetch") == 0)
+        system_fetcher();
     else if(strcmp(cmd, (uint8_t*)"reboot") == 0)
         reboot();
     else
         puts("\nCommand not found!");
-}
-
-void iceos_ascii_logo() {
-    printf_color("\n\n"
-    "###################################################\n#",
-    LIGHT_BLUE, BLACK);
-    printf_color(" iceOS - developed by Marco Cetica (c) 2019-2020 ",
-    LIGHT_MAGENTA, BLACK);
-    printf_color("#\n###################################################\n",
-    LIGHT_BLUE, BLACK);
 }
