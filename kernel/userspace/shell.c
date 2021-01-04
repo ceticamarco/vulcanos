@@ -115,6 +115,8 @@ void processCommand(uint8_t *cmd) {
         system_fetcher();
     else if(strcmp(cmd, (uint8_t*)"reboot") == 0)
         reboot();
+    else if(strcmp(cmd, (uint8_t*)"") == 0)
+        puts("");
     else
         puts("\nCommand not found!");
 }

@@ -82,7 +82,7 @@ uint8_t *uitoa(uint32_t val, uint8_t *buf, uint32_t radix) {
 }
 
 size_t strlen(const uint8_t *buf) {
-    unsigned int i = 0;
+    uint32_t i = 0;
     while(buf[i] != 0)
         i++;
     return i;
@@ -95,6 +95,13 @@ uint8_t *strcpy(uint8_t *dst, const uint8_t *src) {
     return dst_p;
 }
 
+void strcat(void *dest, const void *src) {
+    uint8_t *end = (uint8_t*)dest + strlen(dest);
+    memcpy((uint8_t*)end, (uint8_t*)src, strlen((uint8_t*)src));
+    end += strlen((uint8_t*)src);
+    *end = '\0';
+}
+
 /* Worst memset implementation
  * i could find on the net.
  * however it works so... */
@@ -105,6 +112,17 @@ void *memset(void *s, uint32_t c, size_t n) {
         mem[i] = (uint8_t)c;
 
     return s;
+}
+
+void *memcpy(void *dst, void const *src, uint32_t n) {
+    uint8_t *ret = dst;
+    uint8_t *p = dst;
+    const uint8_t *q = src;
+
+    while(n--)
+        *p++ = *q++;
+    
+    return ret;
 }
 
 void *memmove(void *dst, const void *src, size_t len) {

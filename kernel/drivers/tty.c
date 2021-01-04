@@ -5,6 +5,8 @@
 #define VGA_PTR ((uint8_t*) VIDEO_MEM_ADDR) // Pointer to frame buffer
 // Also define a 2 byte pointer because cells are 16 bits wide
 #define UVGA_PTR ((uint16_t *)VIDEO_MEM_ADDR)
+#define STRINGIZE(x) #x
+#define STRINGIZE_VALUE_OF(x) STRINGIZE(x)
 
 static uint32_t fb_col = 1; // X
 static uint32_t fb_row = 0; // Y
@@ -95,8 +97,24 @@ void kprint_dec(uint32_t num) {
 }
 
 void init_prompt() {
-    uint8_t *prompt = (uint8_t*)"\nring0@iceOS-$ ";
-    kprint_c(prompt, strlen(prompt), LIGHT_RED, BLACK);
+    uint8_t user[64], hostname[64];
+#ifdef DEFAULT_USER
+        strcpy(user, (uint8_t*)STRINGIZE_VALUE_OF(DEFAULT_USER));
+#else
+        #error "-DDEFAULT_USER flag not set"
+#endif
+
+#ifdef DEFAULT_HOSTNAME
+        strcpy(hostname, (uint8_t*)STRINGIZE_VALUE_OF(DEFAULT_HOSTNAME));
+#else
+        #error "-DDEFAULT_HOSTNAME flag not set"
+#endif
+
+    newline();
+    kprint_c(user, strlen(user), LIGHT_GREEN, BLACK);
+    kprint_c((uint8_t*)"@", 1, BROWN, BLACK);
+    kprint_c(hostname, strlen(hostname), CYAN, BLACK);
+    kprint_c((uint8_t*)" #> ", 4, LIGHT_BROWN, BLACK);
 }
 
 void clear_prompt() {
