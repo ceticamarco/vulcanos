@@ -42,7 +42,7 @@ clean:
 	rm -rf obj/ kernel/*.o kernel/cpu/*.o
 	rm -rf kernel/userspace/*.o kernel/mem/*.o
 	rm -rf kernel/drivers/*.o kernel/libc/*.o
-	rm -rf iceOS.iso bochslog.txt commands isodir
+	rm -rf vulcanos.iso bochslog.txt commands isodir
 
 bochs:
 	bochs -f bochs_cfg -q
