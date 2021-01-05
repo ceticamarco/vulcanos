@@ -12,18 +12,35 @@
 #include "drivers/keyboard.h"
 #include "mem/paging.h"
 #include "mem/kheap.h"
+#include "mem/multiboot.h"
 #include "userspace/shell.h"
 #include "libc/stdio.h"
-#include "libc/assert.h"
+#include "libc/panic.h"
 
 #include <stdint.h>
 
 #define PRTOK printf("\n["); printf_color(" OK ", LIGHT_GREEN, BLACK); printf("]"); // Ugly hack to print "[ OK ]"
 #define PRTAT printf("\n["); printf_color(" ** ", LIGHT_BROWN, BLACK); printf("]"); // Ugly hack to print "[ * ]"
+#define PRTER printf("\n["); printf_color(" ERR ", LIGHT_RED, BLACK); printf("]"); // Ugly hack to print "[ ER ]"
 
-void kernel_main() {
+
+void kernel_main(unsigned long magic, uint32_t addr) {
+    // First of all, check if we're booted by a Multiboot-compliant boot loader
+    if(magic != MULTIBOOT2_BOOTLOADER_MAGIC) {
+        PRTER
+        printf("   - Invalid magic number: %x\n", (unsigned)magic);
+        PANIC("Invalid multiboot magic number");
+    }
+
+    if(addr & 7) {
+        PRTER
+        printf("   - Unaligned mbi: %x\n", addr);
+        PANIC("Unaligned multiboot MBI");
+    }
+
+       
     printf("Loading kernel, wait please...");
-
+    
     gdt_setup(); // Setup Global Descriptor Table
     PRTOK
     printf("   - Loaded GDT");
@@ -57,6 +74,6 @@ void kernel_main() {
 
     PRTOK
     printf("   - Heap works!");
-    
+
     init_prompt(); // Initialize frame buffer
 }

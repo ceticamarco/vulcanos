@@ -111,10 +111,10 @@ void init_prompt() {
 #endif
 
     newline();
-    kprint_c(user, strlen(user), LIGHT_GREEN, BLACK);
-    kprint_c((uint8_t*)"@", 1, BROWN, BLACK);
-    kprint_c(hostname, strlen(hostname), CYAN, BLACK);
-    kprint_c((uint8_t*)" #> ", 4, LIGHT_BROWN, BLACK);
+    kprint_c(user, strlen(user), LIGHT_CYAN, BLACK);
+    kprint_c((uint8_t*)"@", 1, LIGHT_RED, BLACK);
+    kprint_c(hostname, strlen(hostname), LIGHT_MAGENTA, BLACK);
+    kprint_c((uint8_t*)" #> ", 4, LIGHT_BLUE, BLACK);
 }
 
 void clear_prompt() {

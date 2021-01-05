@@ -1,6 +1,6 @@
 #include "kheap.h"
 #include "paging.h"
-#include "../libc/assert.h"
+#include "../libc/panic.h"
 
 extern uint32_t end;
 uint32_t placement_addr = (uint32_t)&end;

@@ -5,12 +5,11 @@
  *       Released under GPLv3         *
  * https://github.com/ice-bit/iceOS   *
  ***************************************/
-#ifndef ASSERT_H
-#define ASSERT_H
+#ifndef PANIC_H
+#define PANIC_H
 
 #include <stdint.h>
 #include "../drivers/tty.h"
-// These functions are used for error checking
 
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))

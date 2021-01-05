@@ -54,4 +54,4 @@ run-debug:
 	qemu-system-x86_64 -cdrom vulcanos.iso -d exec,cpu
 
 run-curses:
-	qemu-system-x86_64 -cdrom vulcanos.iso -curses
+	qemu-system-x86_64 -cdrom vulcanos.iso -curses -cpu qemu32

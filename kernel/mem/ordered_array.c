@@ -1,6 +1,6 @@
 #include "ordered_array.h"
 #include "kheap.h"
-#include "../libc/assert.h"
+#include "../libc/panic.h"
 #include "../libc/string.h"
 
 uint8_t standard_lessthan_predicate(type_t a, type_t b) {

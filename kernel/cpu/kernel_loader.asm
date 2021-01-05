@@ -10,7 +10,7 @@
 section .multiboot
 
 head_s:
-    dd 0xE85250D6        ; Multiboot header magic number
+    dd 0xE85250D6       ; Multiboot header magic number
     dd 0                ; Protected mode flag
     dd head_e - head_s  ; Header length
     dd 0x100000000 - (0xE85250D6 + 0 + (head_e - head_s)) ; Checksum of above
@@ -28,7 +28,7 @@ EXTERN kernel_main
 section .text
 kernel_loader:
     mov esp, kernel_stack + KERNEL_STACK_SZ ; Define stack pointer
-    push ebx ; Set multiboot header
+    push eax ; Set multiboot header
     call kernel_main ; Jump into kernel's main function
 .loop:
     jmp .loop ; If the kernel returns, go into an infinite loop.

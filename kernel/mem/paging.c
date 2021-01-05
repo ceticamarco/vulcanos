@@ -1,6 +1,6 @@
 #include "paging.h"
 #include "../libc/string.h"
-#include "../libc/assert.h"
+#include "../libc/panic.h"
 #include "../libc/stdio.h"
 #include "../drivers/tty.h"
 
