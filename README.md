@@ -14,15 +14,15 @@ Before building this project you need to setup a [cross compiler](https://wiki.o
 - grub
 - mtools(only for Arch Linux)
 
-After that, you can build iceOS just by running the command listed below.  
-1. Type `make all` to compile the system and to create an ISO
-2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs(only for debug purposes).
+After that, you can build VulcanOS just by running the commands below:  
+1. Type `make all` to compile the system and to create an ISO file;  
+2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs.
 
-You can also find a ISO file 
+You can also find an ISO file 
 [here](https://github.com/ice-bit/vulcanos/raw/master/imgs/vulcanos.iso)(md5sum: `a706cdfeea573e08550e599717d3f519`)
 
 ## Features
-iceOS has the following features:  
+Right now, VulcanOS supports the following features:
 - [x] VGA driver  
 - [x] Interrupts  
 - [x] PIC & PIT driver  
