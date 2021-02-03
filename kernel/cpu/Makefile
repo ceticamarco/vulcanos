@@ -1,4 +1,4 @@
-OBJS =  main.asm.o ports.asm.o  \
+OBJS =  main.asm.o main64.asm.o ports.asm.o  \
 		gdt.asm.o idt.asm.o \
 		interrupts.asm.o header.asm.o
 

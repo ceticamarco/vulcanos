@@ -1,4 +1,4 @@
-LD = i686-elf-ld
+LD = x86_64-elf-ld
 LFLAGS = -melf_i386 -nostdlib -O2 -T link.ld 
 
 all: prepare cpu kernel_code drivers libc userspace mem link iso
