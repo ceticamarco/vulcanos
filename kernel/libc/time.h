@@ -1,10 +1,10 @@
-/**************************************
- *          VulcanOS Kernel           *
- * Developed by Marco 'icebit' Cetica * 
- *            (c) 2019-2021           *
- *       Released under GPLv3         *
- * https://github.com/ice-bit/iceOS   *
- ***************************************/
+/*****************************************
+ *          VulcanOS Kernel              *
+ * Developed by Marco 'icebit' Cetica    * 
+ *            (c) 2019-2021              *
+ *       Released under GPLv3            *
+ * https://github.com/ice-bit/vulcanos   *
+ *****************************************/
 /* Get time reading the RTC(real time clock) CMOS on the motherboard */
 #ifndef TIME_H
 #define TIME_H

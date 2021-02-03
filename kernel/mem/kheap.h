@@ -1,10 +1,10 @@
-/**************************************
- *          VulcanOS Kernel           *
- * Developed by Marco 'icebit' Cetica * 
- *            (c) 2019-2021           *
- *       Released under GPLv3         *
- * https://github.com/ice-bit/iceOS   *
- ***************************************/
+/*****************************************
+ *          VulcanOS Kernel              *
+ * Developed by Marco 'icebit' Cetica    * 
+ *            (c) 2019-2021              *
+ *       Released under GPLv3            *
+ * https://github.com/ice-bit/vulcanos   *
+ *****************************************/
 
 /*** Heap implementation from James Molloy's tutorial:
   http://www.jamesmolloy.co.uk/tutorial_html/7.-The%20Heap.html ***/

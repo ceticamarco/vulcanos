@@ -1,17 +1,17 @@
 ENTRY(kernel_loader)
+
 SECTIONS
 {
+    . = 1M;
 
-    .text 0x100000 :
+    .boot :
     {
-        code = .; _code = .; __code = .;
-        *(.text)
+        KEEP(*(.multiboot_header))
         . = ALIGN(4096);
     }
 
-    .data :
+    .text :
     {
-        data = .; _data = .; __data = .;
         *(.data)
         *(.rodata)
         . = ALIGN(4096);
@@ -19,7 +19,6 @@ SECTIONS
 
     .bss :
     {
-        bss = .; _bss = .; __bss = .;
         *(.bss)
         . = ALIGN(4096);
     }

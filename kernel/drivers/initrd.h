@@ -1,10 +1,10 @@
-/**************************************
- *          VulcanOS Kernel           *
- * Developed by Marco 'icebit' Cetica * 
- *            (c) 2019-2021           *
- *       Released under GPLv3         *
- * https://github.com/ice-bit/iceOS   *
- ***************************************/
+/*****************************************
+ *          VulcanOS Kernel              *
+ * Developed by Marco 'icebit' Cetica    * 
+ *            (c) 2019-2021              *
+ *       Released under GPLv3            *
+ * https://github.com/ice-bit/vulcanos   *
+ *****************************************/
 #ifndef INITRD_H
 #define INITRD_H
 /* Ramdisk is a file system that is loaded along with the kernel

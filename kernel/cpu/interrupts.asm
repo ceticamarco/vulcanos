@@ -1,10 +1,10 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;             vulcanOS Kernel         ;
-; Developed by Marco 'icebit' Cetica  ;
-;              (c) 2019-2021          ;
-;        Released under GPLv3         ;
-;   https://github.com/ice-bit/iceOS  ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;             vulcanOS Kernel           ;
+; Developed by Marco 'icebit' Cetica    ;
+;              (c) 2019-2021            ;
+;        Released under GPLv3           ;
+;   https://github.com/ice-bit/vulcanos ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 extern isr_handler ; Defined in drivers/isr.h
 extern irq_handler ; Defined in drivers/isr.h
