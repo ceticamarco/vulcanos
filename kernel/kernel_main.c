@@ -69,7 +69,12 @@ void kernel_main(unsigned long magic, uint32_t addr) {
     kfree((void*)y);
     uint32_t z = kmalloc(8);
     printf(", z: %x", z); // If z is equal to y, heap's anti-fragmentation algorithm works
-    ASSERT(z == y);
+    if(z != y) {
+        PRTER
+        puts("   - Heap test has failed!");
+        PANIC("Different heap pages");
+    }
+
     kfree((void*)z), kfree((void*)x);
 
     PRTOK
