@@ -19,7 +19,7 @@ After that, you can build VulcanOS just by running the commands below:
 2. Type `make run` to start it in QEMU or `make bochs` to start it with bochs.
 
 You can also find an ISO file 
-[here](https://github.com/ice-bit/vulcanos/raw/master/imgs/vulcanos.iso)(md5sum: `a706cdfeea573e08550e599717d3f519`)
+[here](https://github.com/ice-bit/vulcanos/raw/master/imgs/vulcanos.iso)(md5sum: `11375e1e169069b85c14d3cb6c5a4f06`)
 
 ## Features
 Right now, VulcanOS supports the following features:

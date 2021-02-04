@@ -10,7 +10,6 @@ void helper() {
     puts("\nList of available commands:\n"
          "\nhelp        - Print this helper"
          "\nint         - Test some interrupts"
-         "\nbanner      - Show banner"
          "\nclear, cls  - Clear the screen"
          "\nregs        - Prints register dump"
          "\ntimer       - Prints timer tick"
@@ -27,23 +26,34 @@ void test_interrupts() {
 }
 
 void about() {
-    printf_color("\n====== IceOS v0.0.1 (c) 2019 Marco 'icebit' Cetica ======\n\n",
-                 LIGHT_CYAN, BLACK);
-    printf_color(
-        "iceOS is a x86 monolithic kernel written in C from scratch.\n"  
-        "This project doesn't aim to be a fully functional operating system\n"
-        "with tons of drivers and graphical applications,\nit's just a learning tool " 
-        "to teach myself concepts like\nOperating Systems, Computer Architecture and Digital Electronics.\n" 
-        "\n\n"
-        "iceOS comes with the following features:\n"
-        "- Bare metal booting;\n"
-        "- VGA driver;\n"
-        "- Interrupts implementation;\n"
-        "- PIC & PIT implementation;\n"
-        "- PS2 driver;\n"
-        "- Support for x86 architecture;\n"
-        "- GRUB as bootloader;\n",
-    LIGHT_GREEN, BLACK);
+    printf_color("\n             \\                  /,\n", LIGHT_RED, BLACK);
+    printf_color("    _________))                ((__________\n", LIGHT_RED, BLACK);
+    printf_color("   /.-------./\\\\    \\    /    //\\.--------.\\", LIGHT_RED, BLACK);
+    printf_color("  Vulcan", LIGHT_MAGENTA, BLACK);
+    printf_color("OS ", LIGHT_BROWN, BLACK);
+    printf_color("is x86 monolithic \n", LIGHT_GREEN, BLACK);
+    printf_color("  //#######//##\\\\   ))  ((   //##\\\\########\\\\", LIGHT_RED, BLACK);
+    printf_color("  kernel written from scratch \n", LIGHT_GREEN, BLACK);
+    printf_color(" //#######//###((  ((    ))  ))###\\\\########\\\\", LIGHT_RED, BLACK);
+    printf_color("  in C following the UNIX \n", LIGHT_GREEN, BLACK);
+    printf_color("((#######((#####\\\\  \\\\  //  //#####))########))", LIGHT_RED, BLACK);
+    printf_color("  philosophy. \n", LIGHT_GREEN, BLACK);
+    printf_color(" \\##' `###\\######\\\\  \\)(/  //######/####' `##/", LIGHT_RED, BLACK);
+    printf_color("    By Marco Cetica 2019-2021 \n", LIGHT_GREEN, BLACK);
+    printf_color("  )'    ``#)'  `##\\`->oo<-'/##'  `(#''     `(", LIGHT_RED, BLACK);
+    printf_color("      https://git.io/JtzuAs\n", WHITE, BLACK);
+    printf_color("          (       ``\\`..'/''       )\n", LIGHT_RED, BLACK);
+    printf_color("                     \\''(\n", LIGHT_RED, BLACK);
+    printf_color("                      `- )\n", LIGHT_RED, BLACK);
+    printf_color("                      / /\n", LIGHT_RED, BLACK);
+    printf_color("                     ( /\\\n", LIGHT_RED, BLACK);
+    printf_color("                     /\\| \\\n", LIGHT_RED, BLACK);
+    printf_color("                    (  \\\n", LIGHT_RED, BLACK);
+    printf_color("                        )\n", LIGHT_RED, BLACK);
+    printf_color("                       /\n", LIGHT_RED, BLACK);
+    printf_color("                      (\n", LIGHT_RED, BLACK);
+    printf_color("                      `\n", LIGHT_RED, BLACK);
+
 }
 
 void register_dump() {

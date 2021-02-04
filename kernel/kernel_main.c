@@ -6,7 +6,7 @@
  * https://github.com/ice-bit/vulcanos   *
  *****************************************/
 #include "drivers/tty.h"
-//#include "drivers/gdt.h"
+#include "drivers/gdt.h"
 #include "drivers/idt.h"
 #include "drivers/timer.h"
 #include "drivers/keyboard.h"
@@ -41,9 +41,9 @@ void kernel_main(unsigned long magic, uint32_t addr) {
        
     printf("Loading kernel, wait please...");
     
-    // gdt_setup(); // Setup Global Descriptor Table
-    // PRTOK
-    // printf("   - Loaded GDT");
+    gdt_setup(); // Setup Global Descriptor Table
+    PRTOK
+    printf("   - Loaded GDT");
 
     idt_setup(); // Setup Interrupt Descriptor Table
     PRTOK

@@ -1,9 +1,12 @@
-OBJS =  main.asm.o main64.asm.o ports.asm.o  \
-		gdt.asm.o idt.asm.o \
-		interrupts.asm.o header.asm.o
-
+SOURCES = main.asm ports.asm  \
+		gdt.asm idt.asm \
+		interrupts.asm header.asm
+OBJS = $(SOURCES:.asm=.o_asm)
 ASM = nasm
 ASMFLAGS = -f elf32
+
 all: $(OBJS)
-%.asm.o: %.asm
-	$(ASM) $(ASMFLAGS) $< -o $@
+
+%.o_asm: %.asm
+	@$(ASM) $(ASMFLAGS) $< -o $@
+	@echo [ASM] compiling $<...
