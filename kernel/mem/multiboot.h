@@ -94,6 +94,36 @@ typedef unsigned short          multiboot_uint16_t;
 typedef unsigned int            multiboot_uint32_t;
 typedef unsigned long long      multiboot_uint64_t;
 
+struct multiboot
+{
+   multiboot_uint32_t flags;
+   multiboot_uint32_t mem_lower;
+   multiboot_uint32_t mem_upper;
+   multiboot_uint32_t boot_device;
+   multiboot_uint32_t cmdline;
+   int32_t mods_count;
+   multiboot_uint32_t mods_addr;
+   multiboot_uint32_t num;
+   multiboot_uint32_t size;
+   multiboot_uint32_t addr;
+   multiboot_uint32_t shndx;
+   multiboot_uint32_t mmap_length;
+   multiboot_uint32_t mmap_addr;
+   multiboot_uint32_t drives_length;
+   multiboot_uint32_t drives_addr;
+   multiboot_uint32_t config_table;
+   multiboot_uint32_t boot_loader_name;
+   multiboot_uint32_t apm_table;
+   multiboot_uint32_t vbe_control_info;
+   multiboot_uint32_t vbe_mode_info;
+   multiboot_uint32_t vbe_mode;
+   multiboot_uint32_t vbe_interface_seg;
+   multiboot_uint32_t vbe_interface_off;
+   multiboot_uint32_t vbe_interface_len;
+}  __attribute__((packed));
+
+typedef struct multiboot_header multiboot_header_t;
+
 struct multiboot_header
 {
   /*  Must be MULTIBOOT_MAGIC - see above. */
