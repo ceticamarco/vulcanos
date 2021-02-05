@@ -21,7 +21,7 @@ fs_node_t *init_ramdisk(uint32_t multiboot_location) {
     file_headers = (initrd_file_header_t*)(multiboot_location+sizeof(initrd_header_t));
     // Initialize root directory
     initrd_root = (fs_node_t*)kmalloc(sizeof(fs_node_t));
-    strcpy(initrd_root->name, "initrd");
+    strcpy(initrd_root->name, (uint8_t*)"initrd");
     initrd_root->mask = initrd_root->uid = initrd_root->gid = initrd_root->inode = initrd_root->length = 0;
     initrd_root->flags = FS_DIRECTORY;
     initrd_root->read = 0;
@@ -29,13 +29,13 @@ fs_node_t *init_ramdisk(uint32_t multiboot_location) {
     initrd_root->open = 0;
     initrd_root->close = 0;
     initrd_root->readdir = &initrd_readdir;
-    initrd_root->finddir = &initrd_finddir;
+    initrd_root->finddir = (finddir_type_t)&initrd_finddir;
     initrd_root->ptr = 0;
     initrd_root->impl = 0;
 
     // Initialize the /dev/ directory
     initrd_dev = (fs_node_t*)kmalloc(sizeof(fs_node_t));
-    strcpy(initrd_root->name, "dev");
+    strcpy(initrd_root->name, (uint8_t*)"dev");
     initrd_root->mask = initrd_root->uid = initrd_root->gid = initrd_root->inode = initrd_root->length = 0;
     initrd_root->flags = FS_DIRECTORY;
     initrd_root->read = 0;
@@ -43,7 +43,7 @@ fs_node_t *init_ramdisk(uint32_t multiboot_location) {
     initrd_root->open = 0;
     initrd_root->close = 0;
     initrd_root->readdir = &initrd_readdir;
-    initrd_root->finddir = &initrd_finddir;
+    initrd_root->finddir = (finddir_type_t)&initrd_finddir;
     initrd_root->ptr = 0;
     initrd_root->impl = 0;
 
@@ -55,7 +55,7 @@ fs_node_t *init_ramdisk(uint32_t multiboot_location) {
     for(uint32_t i = 0; i < initrd_header->nfiles; i++) {
         file_headers[i].offset += multiboot_location;
         // Create an inode for the file
-        strcpy(root_nodes[i].name, &file_headers[i].name);
+        strcpy(root_nodes[i].name, (uint8_t*)&file_headers[i].name);
         root_nodes[i].mask = root_nodes[i].uid = root_nodes[i].gid = 0;
         root_nodes[i].length = file_headers[i].length;
         root_nodes[i].inode = i;
@@ -84,13 +84,13 @@ static uint32_t initrd_read(fs_node_t *node, uint32_t offset, uint32_t size, uin
 
 static struct dirent *initrd_readdir(fs_node_t *node, uint32_t index) {
     if(node == initrd_root && index == 0) {
-        strcpy(dirent.name, "dev");
+        strcpy(dirent.name, (uint8_t*)"dev");
         dirent.name[3] = 0; // Add null terminator to the string
         dirent.ino = 0;
         return &dirent;
     }
 
-    if(index-1 >= &root_nodes)
+    if(index-1 >= (uint32_t)&root_nodes)
         return 0;
     strcpy(dirent.name, root_nodes[index-1].name);
     dirent.name[strlen(root_nodes[index-1].name)] = 0; // Add null terminator
@@ -99,7 +99,7 @@ static struct dirent *initrd_readdir(fs_node_t *node, uint32_t index) {
 }
 
 static fs_node_t *initrd_finddir(fs_node_t *node, uint8_t *name) {
-    if(node == initrd_root && !strcmp(name, "dev"))
+    if(node == initrd_root && !strcmp(name, (uint8_t*)"dev"))
         return initrd_dev;
     
     for(uint32_t i = 0; i < nroot_nodes; i++)
