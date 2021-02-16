@@ -1,4 +1,4 @@
-# VulcanOS  [![Build Status](https://travis-ci.com/ice-bit/vulcanos.svg?branch=master)](https://travis-ci.com/ice-bit/vulcanos)
+# VulcanOS  ![](https://github.com/ceticamarco/vulcanos/actions/workflows/vulcanos.yml/badge.svg)
 **VulcanOS** is a x86 monolithic kernel written in C from scratch following the UNIX philosophy. This project is just a student learning tool to know more about operating systems, do not expect nothing more than a toy.
 <div align="center">
 <img src="imgs/screenshot.png"  />
